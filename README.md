@@ -1,1 +1,1 @@
-# Django full stack Ecommerce project.
+# Ecommerce project in Django full stack.
