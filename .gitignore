@@ -1,0 +1,19 @@
+virt/
+
+# development detabase
+db.sqlite3
+
+# Cache
+__pycache__/
+*.pyc
+*.pyo
+
+# migration scripts
+migrations/
+
+# log files
+*.log
+
+# environment files
+*.env
+
