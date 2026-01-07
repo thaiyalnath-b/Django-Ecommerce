@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 78px 0 0 0;
+}
+
+.navbar {
+    background-color: rgb(243, 241, 241);
+    box-shadow: 0 6px 6px -1px rgba(0, 0, 0, 0.25);
+
+    .navbar-brand {
+        font-family: 'Poppins', sansserif;
+        font-style: italic;
+        font-weight: 700;
+        font-size: 2.2rem;
+        letter-spacing: 1.5px;
+        color: #1e293b;
+    }
+
+    .nav-link {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #717171;
+    }
+
+    .btn {
+        background-color: rgb(2, 56, 183);
+        color: white;
+    }
+
+    .btn:hover {
+        background-color: rgb(1, 37, 120);
+        color: white;
+    }
+}
+
+.footer {
+
+    padding: 5px 0;
+    background-color: #020617;
+    color: #e5e7eb;
+}
+
+#products-container {
+    background-color: #ededef;
+    padding-bottom: 60px;
+
+    .row {
+        img {
+            height: 230px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    }
+
+    /* .card{
+        padding: 10px 10px 0 10px;
+        border: none;
+
+        .btn{
+            background-color: #020617;
+            color: white;
+        }
+        .card-price{
+            color: rgb(2, 46, 92);
+        }
+    } */
+    .card {
+        padding: 10px 10px 0 10px;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        transition: 0.5s ease;
+    }
+
+    .card .btn {
+        background-color: #020617;
+        color: white;
+    }
+
+    .card .card-price {
+        color: rgb(2, 46, 92);
+    }
+
+    .card::before {
+        content: "";
+        position: absolute;
+        inset: -60%;
+        background: linear-gradient(45deg,
+                transparent 55%,
+                rgba(0, 0, 0, 0.35),
+                transparent 70%);
+        opacity: 0;
+        transform: translateX(-100%);
+        transition: transform 0.7s ease, opacity 0.4s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-6px) scale(1.01);
+        box-shadow: 0 12px 22px rgba(0, 0, 0, 0.45);
+    }
+
+    .card:hover::before {
+        opacity: 1;
+        transform: translateX(100%);
+    }
+}
+
+#carouselExample {
+    .carousel-item {
+        img {
+            aspect-ratio: 16/5;
+        }
+    }
+}

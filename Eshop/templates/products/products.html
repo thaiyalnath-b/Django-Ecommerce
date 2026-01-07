@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Products
+{% endblock %}
+
+{% block content %}
+
+<section id="products-container">
+    <div class="row g-4 px-5 py-3 m-0">
+        {% for product in products %}
+        <!-- Products card -->
+        {% include 'products/includes/ProductCard.html' %}
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
