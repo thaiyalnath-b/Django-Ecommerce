@@ -14,10 +14,6 @@
                             href="{% url 'home_page' %}">Home</a>
                     </li>
                     <li class="nav-item mx-3">
-                        <a class="nav-link {% if current_page == 'products' %} active {% endif %}"
-                            href="{% url 'products' %}">Products</a>
-                    </li>
-                    <li class="nav-item mx-3">
                         <a class="nav-link {% if current_page == 'about' %} active {% endif %}"
                             href="{% url 'about_page' %}">About</a>
                     </li>
@@ -26,17 +22,17 @@
                             href="{% url 'contact_page' %}">Contact</a>
                     </li>
                     <li class="nav-item mx-3 dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Dropdown
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item {% if current_page == 'products' %} active {% endif %}" href="{% url 'products' %}">Products</a></li>
+                            <li><a class="dropdown-item" href="">Another action</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="">Something else here</a></li>
                         </ul>
                     </li>
                     <li class="nav-item mx-3">

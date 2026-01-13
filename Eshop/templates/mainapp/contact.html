@@ -1,11 +1,41 @@
 {% extends 'base/base.html' %}
+{% load static %}
 
 {% block title %}
 Contact
 {% endblock %}
-
 {% block content %}
-This is Contact page.
-<br>
-Current Page: {{ current_page }}
+<section class="contact-hero">
+    <div>
+        <h1>Let's Talk Fashion</h1>
+        <p>We'd love to hear from you</p>
+    </div>
+</section>
+
+<section class="contact-section">
+    <div class="contact-grid">
+
+        <div class="contact-info">
+            <h2>Contact Details</h2>
+            <p>Have a question about your order, size guide, or styling advice?  
+               Our team is always here for you.</p>
+
+            <ul>
+                <li><strong>📍 Address:</strong> Bengaluru, India</li>
+                <li><strong>📧 Email:</strong> thaiyalnath@gmail.com</li>
+                <li><strong>📞 Phone:</strong> +91 9998887770</li>
+            </ul>
+        </div>
+
+        <div class="contact-form-box">
+            <form>
+                <input type="text" placeholder="Your Name">
+                <input type="email" placeholder="Your Email">
+                <textarea rows="5" placeholder="Your Message"></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+
+    </div>
+</section>
 {% endblock %}
