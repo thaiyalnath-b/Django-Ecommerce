@@ -12,6 +12,10 @@ body {
     background-color: rgb(243, 241, 241);
     box-shadow: 0 6px 6px -1px rgba(0, 0, 0, 0.25);
 
+    .img {
+        width: 3.3rem;
+    }
+
     .navbar-brand {
         font-family: 'Poppins', sansserif;
         font-style: italic;
@@ -19,6 +23,7 @@ body {
         font-size: 2.2rem;
         letter-spacing: 1.5px;
         color: #1e293b;
+
     }
 
     .nav-link {
@@ -105,13 +110,25 @@ body {
     }
 }
 
+/* Search Results */
+.schres {
+    padding: 31px 0 0 25px;
+    font-size: 30px;
+    color: #424242;
+
+    span {
+        font-size: 35px;
+        color: #242323
+    }
+}
+
 /* About Section */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@300;400;600&display=swap');
 
 body {
     font-family: 'Inter', sans-serif;
-    background: #050507;
-    color: #eee;
+    background-color: #ededef;
+
 }
 
 .about-hero {
@@ -153,6 +170,7 @@ body {
     margin-top: 15px;
     font-size: 1.2rem;
     opacity: 0.85;
+    color: white;
 }
 
 .about-content {
@@ -202,6 +220,7 @@ body {
     padding: 130px 8%;
     background: linear-gradient(180deg, #050507, #0b0512);
     text-align: center;
+    color: white;
 }
 
 .about-values h2 {
@@ -256,6 +275,7 @@ body {
         radial-gradient(circle at center, rgba(255, 95, 162, 0.5), transparent 60%),
         linear-gradient(135deg, #09010f, #12001a);
     text-align: center;
+    color: white;
 }
 
 .about-cta h2 {

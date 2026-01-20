@@ -1,0 +1,12 @@
+<section id="products-container">
+    <div class="row g-4 px-5 py-3 m-0">
+        {% for product in products %}
+        <!-- Products card -->
+        {% include 'products/includes/ProductCard.html' %}
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">No products available.</p>
+        </div>
+    </div>
+    {% endfor %}
+</section>

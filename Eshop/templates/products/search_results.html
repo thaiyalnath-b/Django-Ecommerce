@@ -1,0 +1,12 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Search results for {{query}}
+{% endblock %}
+
+{% block content %}
+<h4 class="schres">Search results for : <span>{{query}}</span></h4>
+<section>
+    {% include 'products/includes/productsSection.html' %}
+</section>
+{% endblock %}
