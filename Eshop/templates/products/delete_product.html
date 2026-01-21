@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Delete Product
+{% endblock %}
+
+{% block content %}
+<section class="d-flex justify-content-center align-items-center deleteproduct">
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <h2>Confirm delete the {{product.title}}!!!</h2>
+            <button type="submit">Delete Product</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

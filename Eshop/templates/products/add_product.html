@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Add Product
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="addform">
+        <!-- Here we enctype for cutting big files into multiple parts -->
+        <h3>Enter the product Details</h3>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <div class="adbtn">
+                <button type="submit" class="addbtn">Add Product</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

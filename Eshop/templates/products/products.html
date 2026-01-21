@@ -5,5 +5,12 @@ Products
 {% endblock %}
 
 {% block content %}
-{% include 'products/includes/productsSection.html' %}
+<section class="d-flex justify-content-center align-items-center mt-4 crud">
+    <a href="{% url 'add_product' %}" class="btn">Add Product</a>
+</section>
+<section>
+    <div>
+        {% include 'products/includes/productsSection.html' %}
+    </div>
+</section>
 {% endblock %}
