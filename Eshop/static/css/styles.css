@@ -79,13 +79,14 @@ body {
             background-color: #020617;
             color: white;
         }
+
         .btnss {
             color: red;
             font-weight: 900;
         }
 
         .card-text {
-            height: 60px;
+            height: 40px;
         }
 
         .card-price {
@@ -120,7 +121,7 @@ body {
 #carouselExample {
     .carousel-item {
         img {
-            aspect-ratio: 16/6.9;
+            aspect-ratio: 16/6.85;
         }
     }
 }
@@ -128,11 +129,12 @@ body {
 /* Search Results */
 .schres {
     padding: 31px 0 0 25px;
-    font-size: 30px;
-    color: #424242;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #111827;
 
     span {
-        font-size: 35px;
+        font-weight: 700;
         color: #242323
     }
 }
@@ -174,24 +176,115 @@ body {
 }
 
 .deleteproduct {
-    height: 84.4vh;
-    text-align: center;
+    min-height: 84.3vh;
+    background: #f3f4f6;
+    padding: 10px;
 
-    h2 {
-        font-size: 55px;
-        padding-bottom: 10px;
-        font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .delete-card {
+        background: #ffffff;
+        max-width: 520px;
+        width: 100%;
+        padding: 32px;
+        border-radius: 18px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        text-align: center;
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #000b3a;
+            margin-bottom: 10px;
+        }
+
+        .warning-text {
+            font-size: 0.95rem;
+            color: #b91c1c;
+            margin-bottom: 22px;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 240px;
+            object-fit: contain;
+            background: #f3f4f6;
+            padding: 16px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .desc {
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .rs {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 26px;
+
+            span {
+                font-size: 0.9rem;
+                font-weight: 500;
+                color: #6b7280;
+            }
+        }
+
+        .delete-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+
+            background: #dc2626;
+            color: #ffffff;
+
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.35);
+            transition: all 0.25s ease;
+
+            &:hover {
+                background: #b91c1c;
+                transform: translateY(-2px);
+            }
+        }
     }
-
-    button {
-        background-color: #ff0000;
-        color: white;
-        padding: 8px;
-        border: none;
-        border-radius: 5px;
-    }
-
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .deleteproduct {
+        .delete-card {
+            padding: 24px;
+
+            .product-img {
+                height: 200px;
+            }
+        }
+    }
+}
+
 
 /* Product Details */
 .productdetail {
@@ -200,23 +293,214 @@ body {
     justify-content: center;
     height: 84.4vh;
 
+    .car {
+        height: 520px;
+        width: 100%;
+        border-radius: 14px;
+        object-fit: cover;
+    }
+
+    .carousel {
+        position: relative;
+    }
+
+    .carbtns {
+        position: absolute;
+        z-index: 10;
+        right: 20px;
+        top: 16px;
+        gap: 10px;
+        display: flex;
+
+        .icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+
+            text-decoration: none;
+            cursor: pointer;
+
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+            transition: all 0.25s ease;
+        }
+
+        .icon i {
+            font-size: 1.15rem;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .editcar i {
+            color: #2563eb;
+        }
+
+        .editcar:hover {
+            background: #2563eb;
+        }
+
+        .editcar:hover i {
+            color: #ffffff;
+            transform: scale(1.15);
+        }
+
+        .delcar i {
+            color: #dc2626;
+        }
+
+        .delcar:hover {
+            background: #dc2626;
+        }
+
+        .delcar:hover i {
+            color: #ffffff;
+            transform: scale(1.15);
+        }
+
+        .icon-btn:hover {
+            transform: translateY(-3px);
+        }
+    }
+
+
     .add {
-        background-color: #030a29;
-        color: white;
+        background: #0f172a;
+        color: #ffffff;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
+        transition: all 0.25s ease;
+    }
+
+    .add:hover {
+        background: #020617;
+        transform: translateY(-2px);
     }
 
     .edit {
-        background-color: #e5ff00;
-        color: white;
-        margin-right: 10px;
+        background: #15803d;
+        color: #ffffff;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
+        transition: all 0.25s ease;
+    }
+
+    .edit:hover {
+        background: #166534;
+        transform: translateY(-2px);
     }
 
     .delete {
-        background-color: rgb(255, 0, 0);
-        color: white;
+        background: #dc2626;
+        color: #ffffff;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
+        transition: all 0.25s ease;
     }
+
+    .delete:hover {
+        background: #b91c1c;
+        transform: translateY(-2px);
+    }
+
+    .details {
+        padding: 10px 10px 0 10px;
+
+        img {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            background: #f3f4f6;
+            padding: 18px;
+            border-radius: 14px;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 10px;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .desc {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #475569;
+            margin-bottom: 22px;
+            max-width: 95%;
+        }
+
+        .btns {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .btn {
+            width: 200px;
+        }
+
+        .rs {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 28px;
+
+            span {
+                font-size: 1.3rem;
+                font-weight: 500;
+                color: #6b7280;
+            }
+        }
+    }
+
+    .no-image {
+        .no-image-box {
+            height: 420px;
+            width: 100%;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            background: #f3f4f6;
+            border-radius: 16px;
+            color: #64748b;
+
+            i {
+                font-size: 3rem;
+                margin-bottom: 10px;
+                opacity: 0.7;
+            }
+
+            p {
+                font-size: 1rem;
+                font-weight: 500;
+                letter-spacing: 0.3px;
+            }
+        }
+    }
+
 }
 
+/* No Product */
+.noproduct {
+    height: 58.4vh;
+    padding: 40px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+        font-size: 1.5rem;
+        color: #6b7280;
+    }
+}
 
 /* About Section */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@300;400;600&display=swap');

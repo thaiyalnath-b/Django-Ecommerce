@@ -53,6 +53,10 @@ class ProductDetail(DetailView):
     # Here we using get method. So dont want to use the success_url.
     context_object_name = 'product'
 
+    # Overriding the queryset to pre-fetch and add the product images alongside products
+    def get_queryset(self):
+        return Product.objects.prefetch_related('images')
+
 class UpdateProduct(UpdateView):
     model = Product
     template_name = 'products/update_product.html'
@@ -62,5 +66,4 @@ class UpdateProduct(UpdateView):
 class DeleteProduct(DeleteView):
     model = Product
     template_name = 'products/delete_product.html'
-    fields = '__all__'
     success_url = '/'
