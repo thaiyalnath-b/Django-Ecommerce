@@ -55,4 +55,11 @@ Product Details
         </div>
     </div>
 </section>
+<section class="m-3">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-outline-info">Upload</button>
+    </form>
+</section>
 {% endblock %}

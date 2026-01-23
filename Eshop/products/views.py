@@ -27,6 +27,11 @@ def searchProducts(request):
             'query' : query,
             'products' : search_results
         }
+    else :
+        context ={
+            'query' : query,
+            'products' : None
+        }
     return render(request, template_name=template, context=context)
 
 
@@ -46,16 +51,28 @@ class CreateProduct(CreateView):
     fields = '__all__'
     success_url = '/'   # redirection url for successful creation of resource
 
-class ProductDetail(DetailView):
+from django.views.generic.edit import FormMixin
+# This mixin provides ability to render forms from the `form_class`
+from .forms import ProductImageForm
+
+class ProductDetail(FormMixin, DetailView):
     model = Product
     template_name = 'products/product_details.html'
     # Here we didn't use the success_url, because other 3 are post method there when we do something it goes to another page.
     # Here we using get method. So dont want to use the success_url.
     context_object_name = 'product'
+    # providing form class for Product Image
+    form_class = ProductImageForm
 
     # Overriding the queryset to pre-fetch and add the product images alongside products
     def get_queryset(self):
         return Product.objects.prefetch_related('images')
+
+    # If we want to add extra data then we can use this method.
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['ExtraDetail'] = 'This is Extra Added Detail'
+    #     return context
 
 class UpdateProduct(UpdateView):
     model = Product
