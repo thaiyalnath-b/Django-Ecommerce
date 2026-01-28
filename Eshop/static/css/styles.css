@@ -43,6 +43,48 @@ body {
         background-color: rgb(1, 37, 120);
         color: white;
     }
+
+    .nav-item {
+        &.position-relative {
+            .nav-link {
+                color: #0f172a;
+                padding: 6px 10px;
+                transition: color 0.25s ease;
+
+                i {
+                    transition: transform 0.25s ease;
+                }
+
+                &:hover {
+                    color: #4f46e5;
+
+                    i {
+                        transform: scale(1.1);
+                    }
+                }
+            }
+
+            .cart-badge {
+                position: absolute;
+                top: 2px;
+                right: 2px;
+                min-width: 18px;
+                height: 18px;
+                padding: 0 5px;
+                background: linear-gradient(135deg, #ef4444, #b91c1c);
+                color: #ffffff;
+                font-size: 11px;
+                font-weight: 700;
+                border-radius: 999px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                line-height: 1;
+                box-shadow: 0 6px 14px rgba(239, 68, 68, 0.45);
+            }
+        }
+    }
+
 }
 
 .footer {
@@ -147,34 +189,127 @@ body {
     }
 }
 
-.addform {
+/* Edit Card */
+.edit-section {
+    min-height: 90vh;
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
-    height: 84.4vh;
-    font-size: 16px;
+    background-color: #ededef;
 
-    h3 {
-        margin-top: -10px;
-        color: #030a29;
-        font-size: 40px;
-        padding-bottom: 15px;
-    }
+    .edit-card {
+        width: 100%;
+        max-width: 520px;
+        background: #fff;
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
 
-    .adbtn {
-        text-align: center;
+        h3 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 28px;
+            color: #222;
+        }
 
-        .addbtn {
-            border: none;
-            background-color: #030a29;
-            padding: 5px;
-            color: white;
-            border-radius: 5px;
+        .form-fields {
+            p {
+                margin-bottom: 16px;
+            }
+
+            label {
+                display: block;
+                font-weight: 600;
+                margin-bottom: 6px;
+                color: #444;
+            }
+
+            input,
+            select,
+            textarea {
+                width: 100%;
+                padding: 11px 12px;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                font-size: 14px;
+                transition: border 0.25s ease, box-shadow 0.25s ease;
+
+                &:focus {
+                    border-color: #667eea;
+                    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+                    outline: none;
+                }
+            }
+
+            textarea {
+                resize: vertical;
+                min-height: 90px;
+            }
+        }
+
+        .adbtn {
+            display: flex;
+            gap: 14px;
+            margin-top: 26px;
+
+            .addbtn {
+                flex: 1;
+                padding: 12px;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: #fff;
+                border: none;
+                border-radius: 8px;
+                font-size: 15px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+                &:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 10px 22px rgba(102, 126, 234, 0.4);
+                }
+            }
+
+            .cancelbtn {
+                flex: 1;
+                padding: 12px;
+                text-align: center;
+                background: #f1f1f1;
+                color: #444;
+                border-radius: 8px;
+                font-weight: 600;
+                text-decoration: none;
+                transition: background 0.25s ease;
+
+                &:hover {
+                    background: #e1e1e1;
+                }
+            }
+        }
+
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin: 6px 0 0;
+            color: #d9534f;
+            font-size: 13px;
         }
     }
 }
 
+@media (max-width: 480px) {
+    .edit-section {
+        .edit-card {
+            padding: 24px;
+
+            .adbtn {
+                flex-direction: column;
+            }
+        }
+    }
+}
+
+/* Delete Product */
 .deleteproduct {
     min-height: 84.3vh;
     background: #f3f4f6;
@@ -248,8 +383,14 @@ body {
             }
         }
 
+        .btn-group {
+            display: flex;
+            gap: 14px;
+            margin-top: 10px;
+        }
+
         .delete-btn {
-            width: 100%;
+            flex: 1;
             padding: 12px;
             font-size: 1rem;
             font-weight: 600;
@@ -268,9 +409,45 @@ body {
                 background: #b91c1c;
                 transform: translateY(-2px);
             }
+
+            &:active {
+                transform: translateY(0);
+            }
+        }
+
+        .cancelbtn {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+
+            background: #e5e7eb;
+            color: #374151;
+
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+
+            transition: background 0.25s ease;
+
+            &:hover {
+                background: #d1d5db;
+            }
         }
     }
 }
+
+@media (max-width: 480px) {
+    .deleteproduct {
+        .delete-card {
+            padding: 22px;
+
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    }
+}
+
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -282,6 +459,296 @@ body {
                 height: 200px;
             }
         }
+    }
+}
+
+/* Delete product Image */
+.delete-section {
+    min-height: 100vh;
+    background: #ededef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+
+.delete-card {
+    width: 100%;
+    max-width: 1000px;
+    height: 480px;
+    background: #ffffff;
+    border-radius: 20px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18);
+}
+
+.left-panel {
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        background: #ffffff;
+        padding: 14px;
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.right-panel {
+    flex: 0.9;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    h3 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #b91c1c;
+        margin-bottom: 18px;
+    }
+
+    .warning-text {
+        font-size: 0.95rem;
+        color: #374151;
+        margin-bottom: 30px;
+
+        span {
+            display: block;
+            margin-top: 6px;
+            font-weight: 700;
+            color: #b91c1c;
+        }
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 16px;
+
+        .delete-btn {
+            flex: 1;
+            padding: 13px;
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: #ffffff;
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 14px 30px rgba(220, 38, 38, 0.45);
+            transition: all 0.3s ease;
+
+            &:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 18px 38px rgba(220, 38, 38, 0.6);
+            }
+        }
+
+        .cancel-btn {
+            flex: 1;
+            padding: 13px;
+            background: #f1f5f9;
+            color: #475569;
+            border-radius: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+
+            &:hover {
+                background: #e2e8f0;
+                color: #1e293b;
+            }
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .delete-card {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .left-panel {
+        height: 240px;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .delete-section {
+        .delete-card {
+            padding: 22px;
+
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    }
+}
+
+/* Edit Product Image */
+.image-edit-section {
+    min-height: 90vh;
+    background: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+
+.image-edit-card {
+    width: 100%;
+    max-width: 1150px;
+    height: 560px;
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.18),
+        0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+.left-panel {
+    flex: 1.1;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        background: #ffffff;
+        padding: 14px;
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.right-panel {
+    flex: 0.9;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h3 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 26px;
+        text-align: center;
+        letter-spacing: -0.5px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border-radius: 12px;
+            border: 1px solid #d1d5db;
+            background: #f9fafb;
+            font-size: 14px;
+            transition: all 0.25s ease;
+
+            &:focus {
+                background: #ffffff;
+                border-color: #6366f1;
+                box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.25);
+                outline: none;
+            }
+        }
+
+        input[type="file"] {
+            background: #eef2ff;
+            border-style: dashed;
+        }
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 16px;
+        margin-top: 26px;
+
+        .save-btn {
+            flex: 1;
+            padding: 13px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: #ffffff;
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 14px 30px rgba(99, 102, 241, 0.45);
+            transition: all 0.3s ease;
+
+            &:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 18px 38px rgba(99, 102, 241, 0.6);
+            }
+        }
+
+        .cancel-btn {
+            flex: 1;
+            padding: 13px;
+            background: #f1f5f9;
+            color: #475569;
+            border-radius: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+
+            &:hover {
+                background: #e2e8f0;
+                color: #1e293b;
+            }
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .image-edit-card {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .left-panel {
+        height: 260px;
     }
 }
 

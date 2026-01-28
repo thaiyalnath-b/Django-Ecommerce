@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Edit Product Image
+{% endblock %}
+
+{% block content %}
+<section class="image-edit-section">
+    <div class="image-edit-card">
+
+        <!-- LEFT SIDE : IMAGE PREVIEW -->
+        <div class="left-panel">
+            <img src="{{image.img.url}}" class="w-100" alt="">
+        </div>
+
+        <!-- RIGHT SIDE : FORM -->
+        <div class="right-panel">
+            <h3>Edit Product Image</h3>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <div class="btn-group">
+                    <button type="submit" class="save-btn">
+                        Save Changes
+                    </button>
+
+                    <a href="{% url 'product_details' product.pk %}" class="cancel-btn">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

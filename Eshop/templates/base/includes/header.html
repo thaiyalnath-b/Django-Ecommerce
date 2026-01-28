@@ -2,51 +2,85 @@
 <header class="fixed-top">
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <img src="{% static 'images/fw.ico' %}" alt="image" class="img"><a class="navbar-brand"
-                href="{% url 'home_page' %}">FlashWorld</a>
+
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'home_page' %}">
+                <img src="{% static 'images/fw.ico' %}" alt="FlashWorld" class="img me-2">
+                FlashWorld
+            </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav m-auto mb-2 mb-lg-0">
+
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item mx-3">
-                        <a class="nav-link {% if current_page == 'home' %} active {% endif %}" aria-current="page"
+                        <a class="nav-link {% if current_page == 'home' %}active{% endif %}"
                             href="{% url 'home_page' %}">Home</a>
                     </li>
+
                     <li class="nav-item mx-3">
-                        <a class="nav-link {% if current_page == 'about' %} active {% endif %}"
+                        <a class="nav-link {% if current_page == 'about' %}active{% endif %}"
                             href="{% url 'about_page' %}">About</a>
                     </li>
+
                     <li class="nav-item mx-3">
-                        <a class="nav-link {% if current_page == 'contact' %} active {% endif %}"
+                        <a class="nav-link {% if current_page == 'contact' %}active{% endif %}"
                             href="{% url 'contact_page' %}">Contact</a>
                     </li>
+
                     <li class="nav-item mx-3 dropdown">
-                        <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown"
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Manage
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item {% if current_page == 'products' %} active {% endif %}"
-                                    href="{% url 'products' %}">Products</a></li>
-                            <li><a class="dropdown-item" href="">Another action</a></li>
+                            <li>
+                                <a class="dropdown-item {% if current_page == 'products' %}active{% endif %}"
+                                    href="{% url 'products' %}">Products</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#">Carousels</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="">Something else here</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Accounts
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Register</a></li>
+                            <li><a class="dropdown-item" href="#">Login</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
                     </li>
+
                 </ul>
-                <form class="d-flex" role="search" method="get" action="{% url 'search_products' %}">
-                    <input name="query_text" value="{{query}}" class="form-control me-2" type="search"
-                        placeholder="Search" aria-label="Search" />
+
+                <form class="d-flex me-4" role="search" method="get" action="{% url 'search_products' %}">
+                    <input name="query_text" value="{{ query }}" class="form-control me-2" type="search"
+                        placeholder="Search" aria-label="Search">
                     <button class="btn" type="submit">Search</button>
                 </form>
+
+                <ul class="navbar-nav align-items-center mb-2 mb-lg-0">
+
+                    <li class="nav-item me-3 position-relative">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-cart3 fs-4"></i>
+                            <span class="cart-badge">0</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>

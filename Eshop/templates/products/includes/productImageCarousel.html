@@ -1,0 +1,36 @@
+<div>
+    <div class="carousel-inner">
+        <div class="carousel-inner">
+
+            {% if product.images.all %}
+            {% for image in product.images.all %}
+
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ image.img.url }}" class="car" alt="{{ product.title }}">
+                <div class="carbtns">
+                    <a href="{% url 'edit_product_image' image.pk %}" class="icon editcar"><i
+                            class="bi bi-pencil-square"></i></a>
+                    <a href="{% url 'delete_product_image' image.pk %}" class="icon delcar"><i
+                            class="bi bi-trash3"></i></a>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="carousel-item active no-image">
+                <div class="no-image-box">
+                    <i class="bi bi-image"></i>
+                    <p>Image Not Available</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>

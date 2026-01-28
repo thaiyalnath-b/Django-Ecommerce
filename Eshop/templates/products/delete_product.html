@@ -5,7 +5,7 @@ Delete Product
 {% endblock %}
 
 {% block content %}
-<section class="d-flex justify-content-center align-items-center deleteproduct">
+<section class="deleteproduct">
     <div class="delete-card">
         <form method="post">
             {% csrf_token %}
@@ -14,23 +14,36 @@ Delete Product
 
             <p class="warning-text">
                 Are you sure you want to delete
-                <strong>{{product.title}}</strong>?
+                <strong>{{ product.title }}</strong>?
                 This action cannot be undone.
             </p>
 
-            <img src="{{product.thumbnail.url}}" alt="" class="product-img">
+            <img
+                src="{{ product.thumbnail.url }}"
+                alt="{{ product.title }}"
+                class="product-img"
+            >
 
-            <h3 class="product-title">{{product.title}}</h3>
+            <h3 class="product-title">{{ product.title }}</h3>
 
-            <p class="desc">{{product.desc}}</p>
+            <p class="desc">{{ product.desc }}</p>
 
-            <p class="rs"><span>Price:</span> &#8377; {{product.price}}</p>
+            <p class="rs">
+                <span>Price:</span> &#8377; {{ product.price }}
+            </p>
 
             {{ form.as_p }}
 
-            <button type="submit" class="delete-btn">Delete Product</button>
+            <div class="btn-group">
+                <button type="submit" class="delete-btn">
+                    Delete Product
+                </button>
+
+                <a href="{% url 'product_details' product.pk %}" class="cancelbtn">
+                    Cancel
+                </a>
+            </div>
         </form>
     </div>
 </section>
-
 {% endblock %}

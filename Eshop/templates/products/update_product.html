@@ -5,14 +5,15 @@ Edit Product
 {% endblock %}
 
 {% block content %}
-<section>
-    <div class="addform">
-        <h3>Edit the product Details</h3>
-        <form method="post">
+<section class="edit-section">
+    <div class="edit-card">
+        <h3>Edit product Details</h3>
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{form.as_p}}
             <div class="adbtn">
-                <button type="submit" class="addbtn">Update</button>
+                <button type="submit" class="addbtn">Save Changes</button>
+                <a href="{% url 'product_details' product.pk %}" class="cancelbtn">Cancel</a>
             </div>
         </form>
     </div>

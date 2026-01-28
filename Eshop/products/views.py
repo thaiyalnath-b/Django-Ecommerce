@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
-from .models import Product 
+from .models import Product
 # Create your views here.
 
 def productsView(request):
@@ -64,9 +65,23 @@ class ProductDetail(FormMixin, DetailView):
     # providing form class for Product Image
     form_class = ProductImageForm
 
+    def get_success_url(self):
+        return reverse("product_details", kwargs={'pk':self.object.pk})
+
     # Overriding the queryset to pre-fetch and add the product images alongside products
     def get_queryset(self):
         return Product.objects.prefetch_related('images')
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+
+        if form.is_valid():
+            image = form.save(commit = False)
+            image.product = self.object
+            image.save()
+            return redirect(self.get_success_url())
+
 
     # If we want to add extra data then we can use this method.
     # def get_context_data(self, **kwargs):
@@ -84,3 +99,36 @@ class DeleteProduct(DeleteView):
     model = Product
     template_name = 'products/delete_product.html'
     success_url = '/'
+
+
+# Edit Product Image
+from .models import ProductImage
+
+class EditProductImage(UpdateView):
+    model = ProductImage
+    template_name = 'products/image_edit.html'
+    fields = '__all__'
+    context_object_name = 'image'
+
+    def get_success_url(self):
+        return reverse('product_details', kwargs={'pk':self.object.product.pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['product'] = self.object.product
+        return context
+    
+
+class DeleteProductImage(DeleteView):
+    model = ProductImage
+    template_name = 'products/image_delete.html'
+    context_object_name = 'image'
+
+    def get_success_url(self):
+        return reverse('product_details', kwargs={'pk':self.object.product.pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['product'] = self.object.product
+        return context
+    
