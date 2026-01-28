@@ -1,17 +1,34 @@
-<div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bd-interval="3000">
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+
+
+
     <div class="carousel-inner">
         {% for carousel_image in carousel_images %}
-        <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
-            <img src="{{carousel_image.img.url}}" class="d-block w-100" alt="Carousel">
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{ carousel_image.img.url }}" class="d-block w-100" alt="{{ carousel_image.title }}">
+
+            <div class="carousel-caption d-none d-md-block">
+                <h5>{{ carousel_image.title }}</h5>
+                <p>{{ carousel_image.caption }}</p>
+
+                {% if carousel_image.link %}
+                <a href="{{ carousel_image.link }}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    Explore
+                </a>
+                {% endif %}
+            </div>
         </div>
         {% endfor %}
     </div>
+
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
     </button>
+
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
+
 </div>
