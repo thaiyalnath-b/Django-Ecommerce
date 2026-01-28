@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Carousel Image
+{% endblock %}
+
+{% block content %}
+<section class="carousel-form">
+    <div class="form-wrapper">
+        <h3>
+            {% if object %}Edit{% else %}Add{% endif %} Carousel Image
+        </h3>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="actions">
+                <button type="submit" class="btn-primary">Save</button>
+                <a href="{% url 'carousel_list' %}" class="btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
