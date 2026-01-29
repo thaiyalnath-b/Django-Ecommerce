@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 from .models import Product
 # Create your views here.
@@ -28,12 +28,9 @@ def searchProducts(request):
             'query' : query,
             'products' : search_results
         }
+        return render(request, template_name=template, context=context)
     else :
-        context ={
-            'query' : query,
-            'products' : None
-        }
-    return render(request, template_name=template, context=context)
+        return redirect(reverse_lazy('home_page'))
 
 
 # CRUD Operations using Generic Class Based Views of Django
