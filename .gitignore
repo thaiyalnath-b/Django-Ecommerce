@@ -17,3 +17,4 @@ migrations/
 # environment files
 *.env
 
+media/

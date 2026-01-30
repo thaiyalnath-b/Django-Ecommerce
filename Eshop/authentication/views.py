@@ -9,6 +9,7 @@ from django.contrib.auth.views import(
     LoginView
 )
 
+from .forms import UserRegisterForm, UserLoginForm
 # CreateView CBV
 from django.views.generic import CreateView
 
@@ -16,10 +17,10 @@ from django.views.generic import CreateView
 
 class UserRegisterView(CreateView):
     model = User
-    fields = [ 'username', 'password']
+    form_class = UserRegisterForm
     template_name = 'authentication/register.html'
     success_url = reverse_lazy('signin')
 
 class UserLoginView(LoginView):
     template_name = 'authentication/login.html'
-    
+    authentication_form = UserLoginForm
