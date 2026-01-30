@@ -5,37 +5,76 @@
 Contact
 {% endblock %}
 {% block content %}
-<section class="contact-hero">
-    <div>
-        <h1>Let's Talk Fashion</h1>
-        <p>We'd love to hear from you</p>
+<section class="fw-contact">
+    <div class="fw-contact-hero">
+        <div class="fw-contact-hero-inner">
+            <span class="fw-label">FlashWorld</span>
+            <h1>Get in Touch</h1>
+            <p>We'd love to hear from you. Reach out for support, feedback, or collaboration.</p>
+        </div>
+    </div>
+
+    <div class="fw-contact-wrap">
+
+        <div class="fw-contact-grid">
+
+            <div class="fw-contact-info">
+                <h2>Contact Information</h2>
+
+                <div class="fw-info-item">
+                    <span>Email</span>
+                    <p>support@flashworld.com</p>
+                </div>
+
+                <div class="fw-info-item">
+                    <span>Phone</span>
+                    <p>+91 98765 43210</p>
+                </div>
+
+                <div class="fw-info-item">
+                    <span>Location</span>
+                    <p>India</p>
+                </div>
+
+                <div class="fw-info-note">
+                    We aim to respond to all inquiries within 24 hours.
+                </div>
+            </div>
+
+            <div class="fw-contact-form">
+                <h2>Send a Message</h2>
+
+                <form>
+                    <div class="fw-field">
+                        <label>Name</label>
+                        <input type="text" placeholder="Your name">
+                    </div>
+
+                    <div class="fw-field">
+                        <label>Email</label>
+                        <input type="email" placeholder="Your email">
+                    </div>
+
+                    <div class="fw-field">
+                        <label>Message</label>
+                        <textarea placeholder="Write your message"></textarea>
+                    </div>
+
+                    <button type="submit" class="fw-btn">Send Message</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="fw-contact-signature">
+            <h2>FlashWorld Support</h2>
+            <p>
+                Designed for clarity. Built for confidence.
+                We're here to support your journey.
+            </p>
+        </div>
+
     </div>
 </section>
 
-<section class="contact-section">
-    <div class="contact-grid">
-
-        <div class="contact-info">
-            <h2>Contact Details</h2>
-            <p>Have a question about your order, size guide, or styling advice?  
-               Our team is always here for you.</p>
-
-            <ul>
-                <li><strong>📍 Address:</strong> Bengaluru, India</li>
-                <li><strong>📧 Email:</strong> thaiyalnath@gmail.com</li>
-                <li><strong>📞 Phone:</strong> +91 9998887770</li>
-            </ul>
-        </div>
-
-        <div class="contact-form-box">
-            <form>
-                <input type="text" placeholder="Your Name">
-                <input type="email" placeholder="Your Email">
-                <textarea rows="5" placeholder="Your Message"></textarea>
-                <button type="submit">Send Message</button>
-            </form>
-        </div>
-
-    </div>
-</section>
 {% endblock %}

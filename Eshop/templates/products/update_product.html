@@ -10,7 +10,15 @@ Edit Product
         <h3>Edit product Details</h3>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{form.as_p}}
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            {% for field in form %}
+            {% include 'base/includes/basic_form_field.html' %}
+            {% endfor %}
             <div class="adbtn">
                 <button type="submit" class="addbtn">Save Changes</button>
                 <a href="{% url 'product_details' product.pk %}" class="cancelbtn">Cancel</a>

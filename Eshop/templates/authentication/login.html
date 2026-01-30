@@ -6,10 +6,25 @@ Login
 {% block content %}
 <section class="loginform">
     <div class="card mx-auto w-25">
-        <form method="post" enctype="multipart/form-data">
+        <h3 class="text-center mb-4">
+            Login
+        </h3>
+        <form method="post">
             {% csrf_token %}
-            {{form.as_p}}
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            {% for field in form %}
+            {% include 'base/includes/basic_form_field.html' %}
+            {% endfor %}
             <button type="submit" class="btn btn-outline-success">Login</button>
+            <p class="text-center mt-3 mb-0">
+                Don't have an account ? Sign up
+                <a href="{% url 'signup' %}">here</a>
+            </p>
         </form>
     </div>
 </section>

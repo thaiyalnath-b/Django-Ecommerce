@@ -2,6 +2,8 @@ from django.shortcuts import render
 
 from .models import CarouselImage
 from products.models import Product
+
+from .forms import CarouselImageForm
 # Create your views here.
 def homeView(request):
     template = 'mainapp/home.html'
@@ -42,13 +44,13 @@ class CarouselImageListView(ListView):
 
 class CarouselImageCreateView(CreateView):
     model = CarouselImage
-    fields = '__all__'
+    form_class = CarouselImageForm
     template_name = 'mainapp/carousel_form.html'
     success_url = reverse_lazy('carousel_list')
 
 class CarouselImagesUpdateView(UpdateView):
     model = CarouselImage
-    fields = '__all__'
+    form_class = CarouselImageForm
     template_name = 'mainapp/carousel_form.html'
     success_url = reverse_lazy('carousel_list')
 

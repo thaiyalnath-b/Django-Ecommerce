@@ -11,7 +11,15 @@ Add Product
         <h3>Enter the product Details</h3>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{form.as_p}}
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            {% for field in form %}
+            {% include 'base/includes/basic_form_field.html' %}
+            {% endfor %}
             <div class="adbtn">
                 <button type="submit" class="addbtn">Add Product</button>
             </div>

@@ -6,66 +6,110 @@ About
 {% endblock %}
 
 {% block content %}
-<section class="about-hero">
-    <div class="container">
-        <h1>About Our Fashion Store</h1>
-        <p>Redefining Style. Empowering Confidence.</p>
+<section class="fw-about">
+    <div class="fw-hero">
+        <div class="fw-hero-inner">
+            <span class="fw-label">FlashWorld</span>
+            <h1>Designed to Move<br>Built to Impress</h1>
+            <p>Premium footwear crafted with precision, purpose, and timeless elegance.</p>
+        </div>
     </div>
-</section>
 
-<section class="about-content container">
-    <div class="about-grid">
-        <div class="about-text">
-            <h2>Who We Are</h2>
+    <div class="fw-wrap">
+
+        <div class="fw-story">
+            <div class="fw-story-text">
+                <h2>Our Philosophy</h2>
+                <p>
+                    FlashWorld is built on the belief that footwear should balance
+                    refined aesthetics, superior comfort, and lasting quality.
+                    Every design is intentional, modern, and confident.
+                </p>
+            </div>
+            <div class="fw-story-visual">
+                <img src="{% static 'images/one.webp' %}" alt="">
+            </div>
+        </div>
+
+        <div class="fw-divider"></div>
+
+        <div class="fw-materials">
+            <h2>Materials & Detail</h2>
             <p>
-                We are a premium online fashion store delivering trendy, elegant, and affordable
-                dresses for women across India. Our goal is to make every woman feel confident
-                and beautiful in what she wears.
+                Every FlashWorld shoe is constructed using refined textures,
+                engineered support systems, and performance-driven finishes.
             </p>
+
+            <div class="fw-material-grid">
+                <div class="fw-material-card">
+                    <h3>Premium Uppers</h3>
+                    <p>Soft-touch finishes with long-term durability.</p>
+                </div>
+                <div class="fw-material-card">
+                    <h3>Engineered Soles</h3>
+                    <p>Balanced flexibility and support for daily wear.</p>
+                </div>
+                <div class="fw-material-card">
+                    <h3>Precision Fit</h3>
+                    <p>Designed to adapt naturally to movement.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="fw-editorial">
+            <div class="fw-editorial-text">
+                <h2>Designed With Purpose</h2>
+                <p>
+                    Our design process focuses on proportion, balance, and timeless appeal.
+                    Every silhouette is refined until each detail feels intentional.
+                </p>
+            </div>
+            <div class="fw-editorial-visual">
+                <img src="{% static 'images/two.webp' %}" alt="">
+            </div>
+        </div>
+
+        <div class="fw-stats">
+            <div class="fw-stat">
+                <h3>10K+</h3>
+                <p>Pairs Delivered</p>
+            </div>
+            <div class="fw-stat">
+                <h3>98%</h3>
+                <p>Satisfaction</p>
+            </div>
+            <div class="fw-stat">
+                <h3>5★</h3>
+                <p>Average Rating</p>
+            </div>
+        </div>
+        <div class="fw-values">
+            <div class="fw-value">
+                <span>01</span>
+                <h3>Crafted Excellence</h3>
+                <p>Premium materials shaped with precision and care.</p>
+            </div>
+            <div class="fw-value">
+                <span>02</span>
+                <h3>Modern Identity</h3>
+                <p>Minimal silhouettes inspired by contemporary lifestyles.</p>
+            </div>
+            <div class="fw-value">
+                <span>03</span>
+                <h3>Everyday Comfort</h3>
+                <p>Designed to move naturally with your stride.</p>
+            </div>
+        </div>
+
+        <div class="fw-signature">
+            <h2>The FlashWorld Signature</h2>
             <p>
-                From casual wear to party collections, we curate the latest styles that
-                reflect comfort, quality, and modern fashion trends.
+                A refined approach to footwear — built on quality,
+                driven by innovation, and defined by understated luxury.
             </p>
+            <a href="{% url 'products' %}" class="fw-btn">Discover Collection</a>
         </div>
 
-        <div class="about-image">
-            <img src="{% static 'images/abt.png' %}" alt="Our Fashion Collection">
-        </div>
-    </div>
-</section>
-
-<section class="about-values">
-    <div class="container">
-        <h2>Why Choose Us</h2>
-        <div class="values-grid">
-            <div class="value-card">
-                <h3>✨ Premium Quality</h3>
-                <p>We use high-quality fabrics and craftsmanship for every dress.</p>
-            </div>
-
-            <div class="value-card">
-                <h3>🚚 Fast Delivery</h3>
-                <p>Quick and reliable shipping to your doorstep.</p>
-            </div>
-
-            <div class="value-card">
-                <h3>💬 Customer Support</h3>
-                <p>Friendly support to help you anytime you need.</p>
-            </div>
-
-            <div class="value-card">
-                <h3>💖 Affordable Prices</h3>
-                <p>Luxury fashion that fits your budget.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="about-cta">
-    <div class="container">
-        <h2>Discover Your Style With Us</h2>
-        <p>Explore our exclusive collections and upgrade your wardrobe today.</p>
-        <a href="{% url 'products' %}" class="btn-shop">Shop Now</a>
     </div>
 </section>
 {% endblock %}
