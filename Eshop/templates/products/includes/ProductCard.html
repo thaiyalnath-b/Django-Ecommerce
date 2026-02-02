@@ -1,6 +1,6 @@
 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
     <a href="{% url 'product_details' product.pk %}">
-        <div class="card">
+        <div class="card product-card" data-product-id="{{product.id}}">
             {% if product.thumbnail %}
             <img src="{{product.thumbnail.url}}" class="card-img-top" alt="{{product.title}}">
             {% else %}
@@ -16,7 +16,7 @@
                 <h4 class="card-price">&#8377; {{product.price}}</h4>
 
                 {% if product.stock > 0 %}
-                <a href="" class="btn btns w-100">Add to Cart</a>
+                <a href="" class="btn btns w-100  add-to-cart">Add to Cart</a>
                 {% else %}
                 <a href="" class="btn btnss w-100" disabled>Out of Stock</a>
                 {% endif %}

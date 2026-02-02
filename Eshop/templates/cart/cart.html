@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Your Cart
+{% endblock %}
+
+{% block content %}
+<section>
+    {% for item in cart_items %}
+    <div>
+        {{item}}
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

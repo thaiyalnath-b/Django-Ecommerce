@@ -512,15 +512,15 @@ body {
         background: none;
 
         h5 {
-            font-size: 1.4rem;
-            font-weight: 600;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: #ffffff;
             margin-bottom: 0.4rem;
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
         }
 
         p {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             color: #f1f1f1;
             margin-bottom: 0.7rem;
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
@@ -533,6 +533,10 @@ body {
             padding: 0.4rem 1.4rem;
             border-radius: 20px;
             color: #050507;
+        }
+
+        .btn:hover{
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         }
     }
 

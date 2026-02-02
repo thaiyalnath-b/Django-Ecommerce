@@ -1,4 +1,5 @@
-<section id="products-container">
+<section id="products-container" data-add-url = "{% url 'add_to_cart' %}">
+{% csrf_token %}
     <div class="row g-4 px-5 py-3 m-0">
         {% for product in products %}
         <!-- Products card -->
