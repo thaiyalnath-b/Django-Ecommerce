@@ -5,17 +5,36 @@
 const products_container = document.getElementById('products-container');
 const cart_count = document.getElementById('cart-count');
 
+// Load current Value
+async function loadCartCount() {
+    const countUrl = cart_count.dataset.countUrl;
+    try {
+        const result = await fetch(countUrl);
+        const data = await result.json();
+        cart_count.innerText = data.cart_count;
+        
+    }
+    catch (error) {
+        console.error(`Cart count fetch error: ${error}`)
+    }
+}
+if (cart_count) {
+    loadCartCount();
+}
 
 const csrfToken = document.querySelector("[name = csrfmiddlewaretoken]").value
 
-// Add to cart url
-const addUrl = products_container.dataset.addUrl
-
 // Adding event listener onto product cards through their parent container
+
+if (products_container) {
+    // Add to cart url
+    const addUrl = products_container.dataset.addUrl;
+
 products_container.addEventListener('click', async function (event) {
     if (!event.target.classList.contains('add-to-cart')) {
         return;
     }
+
 
     const btn = event.target;
     const product_card = btn.closest(".product-card");
@@ -57,6 +76,7 @@ products_container.addEventListener('click', async function (event) {
         btn.innerText = 'Add to Cart';
     }
 });
+}
 
 
 

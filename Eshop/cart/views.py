@@ -33,7 +33,6 @@ class AddToCart(View):
 
         return JsonResponse({
             'message': f'{this_product.title.capitalize()} was added to cart',
-
             'cart_count' : cart_count
         })
     
@@ -43,8 +42,12 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def view_cart(request):
     cart_items = CartItem.objects.filter(user = request.user)
+    total_quantity = sum(item.quantity for item in cart_items)
+    total_price = sum(item.subtotal for item in cart_items)
     context = {
-        'cart_items' : cart_items
+        'cart_items' : cart_items,
+        'total_quantity' : total_quantity,
+        'total_price' : total_price,
     }
     template = 'cart/cart.html'
     return render(request,template, context)

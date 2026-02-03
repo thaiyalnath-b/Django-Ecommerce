@@ -5,7 +5,7 @@ Product Details
 {% endblock %}
 
 {% block content %}
-<section class="d-flex row productdetail">
+<section class="d-flex row productdetail" data-product-id="{{product.id}}">
     <div id="carouselExample" class="carousel slide col" data-bs-ride="carousel">
         {% include 'products/includes/productImageCarousel.html' %}
     </div>
