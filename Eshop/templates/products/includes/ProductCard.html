@@ -17,7 +17,7 @@
                 <p class="card-text">{{product.desc|truncatechars:70}}</p>
                 <h4 class="card-price">&#8377; {{product.price}}</h4>
             </a>
-
+            
             {% if product.stock > 0 %}
             <button class="btn btns w-100  add-to-cart">Add to Cart</button>
             {% else %}

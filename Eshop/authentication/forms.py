@@ -4,6 +4,7 @@ from django.contrib.auth.forms import (
 )
 
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 # Applying same attributes for all form fields
 BOOTSTRAP_ATTRS = {
@@ -13,13 +14,14 @@ BOOTSTRAP_ATTRS = {
 class UserRegisterForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput(attrs=BOOTSTRAP_ATTRS))
     email = forms.EmailField(widget=forms.EmailInput(attrs=BOOTSTRAP_ATTRS))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs=BOOTSTRAP_ATTRS))
+    password1 = forms.CharField(label="Password", widget=forms.PasswordInput(attrs=BOOTSTRAP_ATTRS))
     # Confirm password
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs=BOOTSTRAP_ATTRS))
+    password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput(attrs=BOOTSTRAP_ATTRS))
 
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+        
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

@@ -32,6 +32,7 @@
                             href="{% url 'contact_page' %}">Contact</a>
                     </li>
 
+                    {% if user.is_staff %}
                     <li class="nav-item mx-2 dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -49,6 +50,7 @@
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </li>
+                    {% endif %}
                     <li class="nav-item mx-2 dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -81,7 +83,7 @@
                         placeholder="Search" aria-label="Search">
                     <button class="btn" type="submit">Search</button>
                 </form>
-
+                {% if user.is_staff == False %}
                 <ul class="navbar-nav align-items-center mb-2 mb-lg-0">
 
                     <li class="nav-item me-3 position-relative">
@@ -93,6 +95,7 @@
                         </a>
                     </li>
                 </ul>
+                {% endif %}
             </div>
         </div>
     </nav>

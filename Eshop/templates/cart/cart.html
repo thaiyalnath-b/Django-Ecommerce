@@ -5,12 +5,11 @@
 
 {% block content %}
 <section id="cartpage">
+    {% if cart_items %}
     <div class="cart">
         <h2 class="cart-title">My Shopping Cart</h2>
 
         <div class="cart-container">
-
-            {% if cart_items %}
             {% for item in cart_items %}
             <div class="cart-item">
 
@@ -31,17 +30,17 @@
 
                     <div class="cart-actions">
                         {% if item.quantity > 1 %}
-                        <button class="qty-btn">-</button>
+                        <button class="qty-btn decrease" data-product-id="{{item.product.id}}">-</button>
                         {% else %}
                         <i class="bi bi-trash2"></i>
                         {% endif %}
 
                         <span class="qty">{{ item.quantity }}</span>
-                        <button class="qty-btn">+</button>
+                        <button class="qty-btn increase" data-product-id="{{item.product.id}}">+</button>
                     </div>
 
                     <div class="cart-remove">
-                        <button type="submit">Remove</button>
+                        <button type="submit" class="remove-btn" data-product-id="{{item.product.id}}">Remove</button>
                     </div>
                 </div>
 
@@ -70,12 +69,10 @@
                     Proceed to Checkout
                 </a>
             </div>
-
-            {% else %}
-            {% include 'cart/includes/empty_cart.html' %}
-            {% endif %}
-
         </div>
     </div>
+    {% else %}
+    {% include 'cart/includes/empty_cart.html' %}
+    {% endif %}
 </section>
 {% endblock %}

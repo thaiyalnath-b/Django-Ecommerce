@@ -35,6 +35,54 @@ class AddToCart(View):
             'message': f'{this_product.title.capitalize()} was added to cart',
             'cart_count' : cart_count
         })
+
+# Increase Quantity
+class IncreaseCartItem(View):
+    def post(self, request):
+        item = get_object_or_404(
+            CartItem,
+            user=request.user,
+            product_id=request.POST.get('product_id')
+        )
+
+        item.quantity += 1
+        item.save()
+
+        return JsonResponse({
+            'quantity': item.quantity,
+            'subtotal': item.subtotal
+        })
+
+# Decrease Quantity
+class DecreaseCartItem(View):
+    def post(self, request):
+        item = get_object_or_404(
+            CartItem,
+            user=request.user,
+            product_id=request.POST.get('product_id')
+        )
+
+        if item.quantity > 1:
+            item.quantity -= 1
+            item.save()
+        else:
+            item.delete()
+
+        return JsonResponse({'success': True})
+    
+# Remove item
+class RemoveCartItem(View):
+    def post(self, request):
+        item = get_object_or_404(
+            CartItem,
+            user=request.user,
+            product_id=request.POST.get('product_id')
+        )
+        item.delete()
+
+        return JsonResponse({'success': True})
+
+
     
 # View Cart
 from django.contrib.auth.decorators import login_required

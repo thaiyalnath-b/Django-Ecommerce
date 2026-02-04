@@ -6,7 +6,9 @@ Products
 
 {% block content %}
 <section class="d-flex justify-content-center align-items-center mt-4 crud">
+    {% if user.is_staff %}
     <a href="{% url 'add_product' %}" class="btn">Add Product</a>
+    {% endif %}
 </section>
 <section>
     <div>

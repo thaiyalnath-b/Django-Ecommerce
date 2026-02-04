@@ -1,0 +1,14 @@
+{% extends "base/base.html" %}
+{% block content %}
+<section class="password-success">
+    <div class="container">
+    <h2>Password changed successfully...</h2>
+    <div>
+        <a href="{% url 'signin' %}" class="btn">
+            Log in now
+        </a>
+    </div>
+</div>
+</section>
+
+{% endblock %}
