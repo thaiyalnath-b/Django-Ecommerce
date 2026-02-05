@@ -1,0 +1,31 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<section class="payment-success">
+    <div class="payment-success__wrapper">
+
+        <div class="payment-success__card">
+            <div class="payment-success__content">
+
+                <h1 class="payment-success__title">
+                    Payment Successful
+                </h1>
+
+                <p class="payment-success__order-id">
+                    Order #{{ order.id }}
+                </p>
+
+                <p class="payment-success__message">
+                    Thank you for your purchase!
+                </p>
+
+                <a href="{% url 'order_history_2' %}" class="payment-success__button">
+                    View Your Orders
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

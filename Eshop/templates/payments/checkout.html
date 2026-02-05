@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+   <style>
+  .checkout-card {
+    max-width: 540px;
+    margin: auto;
+    background-color: #ffffff;
+    color: #1f2937;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid #e6e7eb;
+    box-shadow: 0 18px 40px rgba(17, 24, 39, 0.06);
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .checkout-card h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 12px;
+  }
+
+  .checkout-card p {
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.7;
+  }
+
+  .checkout-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 14px;
+  }
+
+  .checkout-card .order-details {
+    background-color: #f9fafb;
+    border-radius: 16px;
+    padding: 18px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .checkout-card .order-details p {
+    margin-bottom: 8px;
+  }
+
+  .checkout-card .btn {
+    background-color: #0f172a;
+    color: #ffffff;
+    border: none;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 14px;
+    padding: 13px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+
+  .checkout-card .btn:hover {
+    background-color: #020617;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18);
+  }
+
+  .checkout-card .cancel-btn {
+    background-color: transparent;
+    color: #0f172a;
+    border: 1px solid #d1d5db;
+  }
+
+  .checkout-card .cancel-btn:hover {
+    background-color: #f8fafc;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .checkout-card hr {
+    border-color: #e5e7eb;
+    margin: 28px 0;
+  }
+
+  .checkout-card a {
+    text-decoration: none;
+  }
+
+  .checkout-card form {
+    margin-top: 18px;
+  }
+
+  @media (max-width: 576px) {
+    .checkout-card {
+      padding: 30px 24px;
+      border-radius: 18px;
+    }
+
+    .checkout-card h1 {
+      font-size: 23px;
+    }
+  }
+</style>
+
+
+</head>
+
+<body>
+    <div class="container my-5">
+        <div class="checkout-card">
+            <h1 class="text-center">Checkout</h1>
+            <p class="text-center">Dear {{ user.username }}, please confirm your order details and proceed with payment.
+            </p>
+
+            <!-- Order Details -->
+            <div class="order-details mb-4">
+                <h4 class="text-center">Order Details</h4>
+                <p><strong>Order ID:</strong> {{ order.id }}</p>
+                <p><strong>Total Amount:</strong> ₹{{ order.total_amount }}</p>
+            </div>
+
+            <!-- Shipping Address -->
+            <div class="mb-4">
+                <h4>Shipping Address</h4>
+                <p>
+                    {{ order.address.full_name }}<br>
+                    {{ order.address.address_line1 }}, {{ order.address.city }}, {{ order.address.state }} - {{order.address.pincode }}
+                </p>
+                <a href="{% url 'select_address_for_order' order.id %}" class="btn w-100">Change Address</a>
+            </div>
+
+            <!-- Payment Section -->
+            <h4>Payment</h4>
+            <form id="payment-form" method="post" action="{% url 'payment:payment_success' %}">
+                {% csrf_token %}
+                <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ key_id }}"
+                    data-amount="{{ razorpay_order.amount }}" data-currency="{{ razorpay_order.currency }}"
+                    data-order_id="{{ razorpay_order.id }}" data-buttontext="Pay Now" data-name="My Shopping Site"
+                    data-description="Order Payment" data-theme.color="#F37254">
+                    </script>
+                <input type="hidden" name="razorpay_order_id" value="{{ razorpay_order.id }}">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            </form>
+
+            <!-- Cancel Order Section -->
+            <hr>
+            <form method="post" action="{% url 'cancel_order' order.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn cancel-btn w-100 mt-3">Cancel Order</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
