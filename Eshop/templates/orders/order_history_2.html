@@ -1,9 +1,7 @@
 {% extends 'base/base.html' %}
 {% load static %}
 
-{% block title %}
-Order History
-{% endblock %}
+{% block title %}Order History{% endblock %}
 
 {% block content %}
 <section class="order-history">
@@ -13,81 +11,57 @@ Order History
         <a href="{% url 'home_page' %}">Shop more</a>
     </div>
 
+    {% for order in orders %}
+    <article class="order-card">
 
-    {% if orders %}
-        {% for order in orders %}
-        <article class="order-card">
+        <header class="order-card__header">
+            <span>Order ID: #{{ order.id }}</span>
+            <span>{{ order.order_date|date:"d M Y, H:i" }}</span>
+        </header>
 
-            <header class="order-card__header">
-                <span>Order ID: #{{ order.id }}</span>
-                <span>{{ order.order_date|date:"d M Y, H:i" }}</span>
-            </header>
-
-            <div class="order-card__body">
-                <p><strong>Status:</strong> 
-                    <span class="order-status order-status--{{ order.status|lower }}">
-                        {{ order.status }}
-                    </span>
-                </p>
-                <p><strong>Total Amount:</strong> ₹{{ order.total_amount }}</p>
-
-                <div class="order-items">
-                    {% for item in order.order_details.all %}
-                    <div class="order-item">
-
-                        <div class="order-item__image">
-                            <img src="{{ item.order_item.thumbnail.url }}" alt="{{ item.order_item.name }}">
-                        </div>
-
-                        <div class="order-item__details">
-                            <p class="order-item__name">
-                                <a href="{% url 'product_details' item.order_item.id %}">
-                                    {{ item.order_item.name }}
-                                </a>
-                            </p>
-                            <p>Quantity: {{ item.quantity }}</p>
-                            <p>Price: ₹{{ item.price|floatformat:2 }}</p>
-                            <p class="order-item__subtotal">
-                                Subtotal: ₹{{ item.price|floatformat:2 }}
-                            </p>
-                        </div>
-
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <footer class="order-card__footer">
-                {% if order.status == 'PENDING' %}
-                <a href="{% url 'payment:create_razorpay_order' order.id %}"
-                   class="order-btn order-btn--primary">
-                    Pay Now
-                </a>
-                <a href="{% url 'cancel_order' order.id %}" class="order-btn order-btn--secondary"vir>Cancel Order</a>
-                {% endif %}
-                <a href="{% url 'order_detail' order.id %}"
-                   class="order-btn order-btn--secondary">
-                    View Details
-                </a>
-            </footer>
-
-        </article>
-        {% endfor %}
-
-        <div class="order-history__banner">
-            <a href="{% url 'home_page' %}" class="order-btn order-btn--primary">
-                Shop more
-            </a>
+        <div class="order-card__body">
+            <p>
+                <strong>Status:</strong>
+                <span class="order-status order-status--{{ order.status|lower }}">
+                    {{ order.status }}
+                </span>
+            </p>
+            <p><strong>Total Amount:</strong> ₹{{ order.total_amount }}</p>
         </div>
 
-    {% else %}
-        <div class="order-history__empty">
-            <p>No orders found.</p>
-            <a href="{% url 'home_page' %}" class="order-btn order-btn--primary">
-                Start Shopping
+        <footer class="order-card__footer">
+
+            {% if order.status == "PENDING" %}
+            <a href="{% url 'payment:create_razorpay_order' order.id %}"
+               class="order-btn order-btn--primary">
+                Pay Now
             </a>
-        </div>
-    {% endif %}
+
+            <a href="{% url 'cancel_order' order.id %}"
+               class="order-btn order-btn--secondary">
+                Cancel Order
+            </a>
+            {% endif %}
+
+            <a href="{% url 'order_detail' order.id %}"
+               class="order-btn order-btn--secondary">
+                View Details
+            </a>
+
+            {% if order.status == "COMPLETED" %}
+            <a href="{% url 'order_invoice' order.id %}"
+               target="_blank"
+               class="order-btn order-btn--secondary">
+                Get Invoice
+            </a>
+            {% endif %}
+
+        </footer>
+
+    </article>
+    {% empty %}
+    <p>No orders found</p>
+    {% endfor %}
 
 </section>
 {% endblock %}

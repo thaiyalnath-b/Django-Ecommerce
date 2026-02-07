@@ -137,3 +137,30 @@ def cancel_order(request, order_id):
         messages.error(request, "This order cannot be cancelled.")
 
     return redirect("home_page") 
+
+
+
+
+
+from django.http import HttpResponse, HttpResponseForbidden
+from django.shortcuts import get_object_or_404
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from orders.models import Order
+
+def order_invoice(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+
+    if order.status != "COMPLETED":
+        return HttpResponseForbidden("Invoice available only after successful payment")
+
+    template = get_template("orders/invoice.html")
+    html = template.render({"order": order})
+
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = f'inline; filename="invoice_{order.id}.pdf"'
+
+    pisa.CreatePDF(html, dest=response)
+    return response
+
+
