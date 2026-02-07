@@ -1,6 +1,10 @@
 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
 
     <div class="card product-card" data-product-id="{{product.id}}">
+
+        <div class="new">
+            <p>NEW</p>
+        </div>
         {% if product.thumbnail %}
         <a href="{% url 'product_details' product.pk %}">
             <img src="{{product.thumbnail.url}}" class="card-img-top" alt="{{product.title}}">
@@ -13,16 +17,25 @@
 
         <div class="card-body">
             <a href="{% url 'product_details' product.pk %}">
-                <h5 class="card-title">{{product.title}}</h5>
+                <h5 class="card-title">{{product.title|truncatechars:26}}</h5>
                 <p class="card-text">{{product.desc|truncatechars:70}}</p>
                 <h4 class="card-price">&#8377; {{product.price}}</h4>
             </a>
-            
+
+            {% if user.is_staff %}
             {% if product.stock > 0 %}
-            <button class="btn btns w-100  add-to-cart">Add to Cart</button>
+            <span class="staff-stock in">In Stock</span>
             {% else %}
-            <button class=" btnss w-100" disabled>Out of Stock</button>
+            <span class="staff-stock out">0 Stock</span>
             {% endif %}
+            {% else %}
+            {% if product.stock > 0 %}
+            <button class="btn btns w-100 add-to-cart">Add to Cart</button>
+            {% else %}
+            <button class="btnss w-100" disabled>Out of Stock</button>
+            {% endif %}
+            {% endif %}
+
         </div>
     </div>
 

@@ -80,6 +80,7 @@ def payment_success(request):
         payment.save()
         order.status = "COMPLETED"
         order.save()
+        
 
         return render(request, "payments/success.html", {"order": order})
 
@@ -121,3 +122,5 @@ def payment_failure(request):
     payment.save()
 
     return render(request, "payments/failure.html", {"error": failure_reason})
+
+

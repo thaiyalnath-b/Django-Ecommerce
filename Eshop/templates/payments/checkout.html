@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 
 <head>
@@ -6,14 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
    <style>
   .checkout-card {
     max-width: 540px;
     margin: auto;
     background-color: #ffffff;
     color: #1f2937;
-    padding: 40px;
+    padding: 20px 40px;
     border-radius: 20px;
     border: 1px solid #e6e7eb;
     box-shadow: 0 18px 40px rgba(17, 24, 39, 0.06);
@@ -52,7 +54,7 @@
   }
 
   .checkout-card .btn {
-    background-color: #0f172a;
+    background-color: #046e60;
     color: #ffffff;
     border: none;
     font-weight: 500;
@@ -63,7 +65,7 @@
   }
 
   .checkout-card .btn:hover {
-    background-color: #020617;
+    background-color: #07555b;
     transform: translateY(-1px);
     box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18);
   }
@@ -109,7 +111,7 @@
 </head>
 
 <body>
-    <div class="container my-5">
+    <div class="container" style="margin-top: -30px;">
         <div class="checkout-card">
             <h1 class="text-center">Checkout</h1>
             <p class="text-center">Dear {{ user.username }}, please confirm your order details and proceed with payment.
@@ -149,7 +151,7 @@
             <hr>
             <form method="post" action="{% url 'cancel_order' order.id %}">
                 {% csrf_token %}
-                <button type="submit" class="btn cancel-btn w-100 mt-3">Cancel Order</button>
+                <button type="submit" class="btn cancel-btn w-100">Cancel Order</button>
             </form>
         </div>
     </div>

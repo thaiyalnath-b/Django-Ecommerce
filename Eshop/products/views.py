@@ -5,7 +5,9 @@ from .models import Product
 
 from .forms import ProductForm, ProductImageForm
 # Create your views here.
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def productsView(request):
     template = 'products/products.html'
     context = {
@@ -44,8 +46,9 @@ from django.views.generic import (CreateView, DetailView,
                                                                 
 
 # ListView has already been implemented using a function above: productsView(). List view is used for Listing the prouducts.
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class CreateProduct(CreateView):
+class CreateProduct(LoginRequiredMixin, CreateView):
     model = Product
     template_name = 'products/add_product.html'
     form_class = ProductForm

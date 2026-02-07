@@ -44,10 +44,6 @@
                                     href="{% url 'products' %}">Products</a>
                             </li>
                             <li><a class="dropdown-item" href="{% url 'carousel_list' %}">Carousels</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </li>
                     {% endif %}
@@ -78,11 +74,14 @@
 
                 </ul>
 
-                <form class="d-flex me-4" role="search" method="get" action="{% url 'search_products' %}">
-                    <input name="query_text" value="{{ query }}" class="form-control me-2" type="search"
-                        placeholder="Search" aria-label="Search">
-                    <button class="btn" type="submit">Search</button>
-                </form>
+                <div class="searchbutton me-4">
+                    <form class="d-flex me-2" role="search" method="get" action="{% url 'search_products' %}">
+                        <input name="query_text" value="{{ query }}" class="form-control me-2" type="search"
+                            placeholder="Search styles" aria-label="Search">
+                        <button class="btn ps-4" type="submit">Search</button>
+                    </form>
+                </div>
+
                 {% if user.is_staff == False %}
                 <ul class="navbar-nav align-items-center mb-2 mb-lg-0">
 
