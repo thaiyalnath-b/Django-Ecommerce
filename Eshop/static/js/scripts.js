@@ -117,3 +117,31 @@ if (cartContainer) {
 
 
 
+
+
+
+// Add to cart Notification
+(() => {
+    const count = document.getElementById("cart-count");
+    const toast = document.getElementById("cart-toast");
+    if (!count || !toast) return;
+
+    let prev = parseInt(count.innerText) || 0;
+    let added = false;
+
+    document.addEventListener("click", e => {
+        if (e.target.classList.contains("add-to-cart")) added = true;
+    });
+
+    new MutationObserver(() => {
+        const curr = parseInt(count.innerText) || 0;
+
+        if (added && curr > prev) {
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 1800);
+            added = false;
+        }
+
+        prev = curr;
+    }).observe(count, { childList: true });
+})();
