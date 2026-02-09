@@ -19,7 +19,7 @@
             <a href="{% url 'product_details' product.pk %}">
                 <h5 class="card-title">{{product.title|truncatechars:26}}</h5>
                 <p class="card-text">{{product.desc|truncatechars:70}}</p>
-                <h4 class="card-price">&#8377; {{product.price}}</h4>
+                <h4 class="card-price">Rs. {{product.price}}</h4>
             </a>
 
             {% if user.is_staff %}

@@ -7,7 +7,7 @@
 
 /* body */
 body {
-    padding: 78px 0 0 0;
+    padding: 58px 0 0 0;
     font-family: 'Inter', sans-serif;
     background-color: #cfcfcf;
 }
@@ -634,7 +634,7 @@ body {
     padding: 6px 0;
 
     .img {
-        width: 3.4rem;
+        width: 3.2rem;
         transition: transform 0.35s ease;
         filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12));
 
@@ -645,7 +645,7 @@ body {
 
     .navbar-brand {
         font-family: 'Poppins', sans-serif;
-        font-style: italic;
+        /* font-style: italic; */
         font-weight: 900;
         font-size: 2.4rem;
         letter-spacing: 1.6px;
@@ -770,7 +770,7 @@ body {
     }
 
     .searchbutton input.form-control {
-        width: 420px;
+        max-width: 260px;
     }
 
     @media (max-width: 992px) {
@@ -801,9 +801,9 @@ body {
     }
 
     h3 {
-        font-size: 26px;
+        font-size: 30px;
         font-weight: 700;
-        color: #f8fafc;
+        color: #ffffff;
     }
 
     h5 {
@@ -935,7 +935,10 @@ body {
         }
 
         .card-price {
+            font-family: 'Montserrat', sans-serif;
             color: rgb(2, 46, 92);
+            font-weight: 700;
+            font-size: 18px;
         }
 
         .staff-stock {
@@ -1111,18 +1114,19 @@ body {
 
 /* Cart Page */
 #cartpage {
-    background: #dadada;
+    background: #efefef;
     min-height: 100vh;
     padding: 24px 0;
+    margin-top: 22px;
 
     .cart {
         max-width: 1200px;
         margin: auto;
 
         .cart-title {
-            font-size: 22px;
+            font-size: 30px;
             font-weight: 700;
-            color: #0f1111;
+            color: #001e41;
             margin-bottom: 18px;
             padding-left: 4px;
         }
@@ -1137,19 +1141,19 @@ body {
         .cart-item {
             grid-column: 1 / 2;
             display: grid;
-            grid-template-columns: 120px 1fr 120px;
+            grid-template-columns: 140px 1fr 120px;
             gap: 16px;
-            padding: 18px;
+            padding: 25px;
             background: #fff;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 10px;
             align-items: flex-start;
             margin-bottom: 12px;
         }
 
         .cart-image {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             border: 1px solid #ddd;
             border-radius: 4px;
             background: #fff;
@@ -1166,22 +1170,23 @@ body {
 
         .cart-details {
             .cart-product-title {
-                font-size: 16px;
-                font-weight: 500;
-                color: #0f1111;
+                font-size: 22px;
+                font-weight: 600;
+                color: #0f1011;
                 margin-bottom: 4px;
             }
 
             .cart-desc {
-                font-size: 13px;
+                font-size: 15px;
                 color: #565959;
                 margin-bottom: 8px;
             }
 
             .cart-price {
-                font-size: 18px;
-                font-weight: 700;
-                color: #b12704;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 16px;
+                font-weight: 500;
+                color: #041d34;
                 margin-bottom: 8px;
             }
 
@@ -1275,8 +1280,8 @@ body {
             top: 90px;
             background: #fff;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 18px;
+            border-radius: 10px;
+            padding: 25px;
             height: fit-content;
 
             .summary-title {
@@ -1441,9 +1446,8 @@ body {
 /* Carousel */
 #carouselExample {
     .caritem {
-
         img {
-            aspect-ratio: 16/5.9;
+            aspect-ratio: 16/6.1;
             width: 100vw;
         }
     }
@@ -1521,8 +1525,9 @@ body {
 
 /* Carousel Images List */
 .carousel-section {
+    margin-top: 20px;
     padding: 2rem;
-    min-height: 84.4vh;
+    min-height: 89.2vh;
     background-color: #d5d5d5;
 
     h3 {
@@ -1879,7 +1884,8 @@ body {
 
 /* CRUD Operations */
 .crud {
-    background-color: #cfcfcf;
+    background-color: #efefef;
+    margin-top: 20px;
 
     .btn {
         background-color: #030a29;
@@ -2962,7 +2968,7 @@ body {
 }
 
 .sv-hero {
-    min-height: 89.2vh;
+    min-height: 91.9vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3277,7 +3283,7 @@ body {
 }
 
 .fw-contact-hero {
-    min-height: 89.2vh;
+    min-height: 91.9vh;
     display: flex;
     align-items: center;
     justify-content: center;

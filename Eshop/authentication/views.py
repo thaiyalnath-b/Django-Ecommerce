@@ -100,7 +100,6 @@ from django.contrib.auth import update_session_auth_hash
 def set_new_password(request):
     context = None
     email = request.session.get('verified_email')
-    print(email)
     if not email:
         return redirect('send_otp')
     
@@ -119,6 +118,13 @@ def set_new_password(request):
             request.session.pop('verified_email', None)
             request.session.pop('email_for_reset', None)
             return render(request, 'authentication/pwd_reset/done.html')
+        else:
+            form = SetPasswordForm(User)
+            context = {'form': form,
+                       'error': "Passwords didn't match"}
+
+            return render(request=request, template_name='authentication/pwd_reset/set_new_password.html', context=context)
+
     else:
         form = SetPasswordForm(User)
         context = {'form': form}
