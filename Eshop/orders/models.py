@@ -97,7 +97,10 @@ class Order(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True, related_name="orders")
 
     def __str__(self):
-        return f"Order #{self.id} for {self.user.username}"
+        if self.user:
+            return f"Order #{self.id} for {self.user.username}"
+        else:
+            return f"Order #{self.id}"
     
 class OrderDetails(models.Model):
     order = models.ForeignKey(Order, related_name="order_details", on_delete=models.CASCADE)
@@ -106,6 +109,6 @@ class OrderDetails(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"Detail for order {self.order.id} - Product: {self.order_item.product.name}"
+        return f"Detail for order {self.order.id} - Product: {self.order_item.title}"
     
     
