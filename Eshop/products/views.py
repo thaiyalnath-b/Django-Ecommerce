@@ -29,7 +29,7 @@ def searchProducts(request):
         )
 
         context = {
-            'query' : query,
+            'query' : query.capitalize(),
             'products' : search_results
         }
         return render(request, template_name=template, context=context)

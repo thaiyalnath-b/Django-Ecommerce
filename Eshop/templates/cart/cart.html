@@ -32,7 +32,7 @@
                         {% if item.quantity > 1 %}
                         <button class="qty-btn decrease" data-product-id="{{item.product.id}}">-</button>
                         {% else %}
-                        <i class="bi bi-trash2"></i>
+                        <i class="bi bi-trash2 remove-btn" data-product-id="{{item.product.id}}"></i>
                         {% endif %}
 
                         <span class="qty">{{ item.quantity }}</span>

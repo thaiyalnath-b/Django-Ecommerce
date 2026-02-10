@@ -5,7 +5,8 @@ Product Details
 {% endblock %}
 
 {% block content %}
-<section id="products-container" class="d-flex row productdetail product-card" data-product-id="{{product.id}}" data-add-url = "{% url 'add_to_cart' %}">
+<section id="products-container" class="d-flex row productdetail product-card" data-product-id="{{product.id}}"
+    data-add-url="{% url 'add_to_cart' %}">
     <div id="carouselExample" class="carousel slide col" data-bs-ride="carousel">
         {% include 'products/includes/productImageCarousel.html' %}
     </div>
@@ -24,7 +25,7 @@ Product Details
             {% if product.stock > 0 %}
             <button class="btn add add-to-cart">Add to Cart</button>
             {% else %}
-            
+
             <button class="btn stock" aria-disabled="true">Out of Stock</button>
             {% endif %}
             {% endif %}
@@ -32,7 +33,7 @@ Product Details
     </div>
 </section>
 {% if user.is_staff %}
-<section class="m-3 uploadimage">
+<section class="uploadimage">
     <div class="upload">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}

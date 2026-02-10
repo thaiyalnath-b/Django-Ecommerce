@@ -1,10 +1,11 @@
 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
 
     <div class="card product-card" data-product-id="{{product.id}}">
-
+        {% if product.is_new %}
         <div class="new">
             <p>NEW</p>
         </div>
+        {% endif %}
         {% if product.thumbnail %}
         <a href="{% url 'product_details' product.pk %}">
             <img src="{{product.thumbnail.url}}" class="card-img-top" alt="{{product.title}}">
