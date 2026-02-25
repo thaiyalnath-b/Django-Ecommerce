@@ -33,15 +33,29 @@ def create_order(request):
 
     # Create order detail records for each cart item
     for item in cart_items:
+        product = item.product
+
+        # Check stock
+        if product.stock < item.quantity:
+            messages.error(request, f"Not enough stock for {product.name}")
+            order.delete()  # delete created order
+            return redirect("cart_page")  # change to your cart URL name
+
+        # Reduce stock
+        product.stock -= item.quantity
+        product.save()
+
+        # Create order details
         OrderDetails.objects.create(
             order=order,
-            order_item=item.product,
+            order_item=product,
             quantity=item.quantity,
-            price=item.product.price * item.quantity
+            price=product.price * item.quantity
         )
 
-    # Clear the cart after creating the order
+    # Clear cart
     cart_items.delete()
+
 
     # Redirect to the Select Address view
     return redirect('select_address_for_order', order_id=order.id)

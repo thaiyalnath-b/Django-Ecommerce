@@ -1,38 +1,884 @@
+<style>
+:root {
+    --rg-deep: #0f172a;
+    --rg-slate: #1e293b;
+    --rg-charcoal: #334155;
+    --rg-stone: #475569;
+    --rg-mist: #cbd5e1;
+    --rg-fog: #e2e8f0;
+    --rg-cloud: #f1f5f9;
+    --rg-amber: #f59e0b;
+    --rg-amber-light: #fbbf24;
+    --rg-amber-glow: #fcd34d;
+    --rg-teal: #14b8a6;
+    --rg-teal-light: #2dd4bf;
+    --rg-white: #ffffff;
+    --rg-offwhite: #f8fafc;
+    --rg-gradient-midnight: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+    --rg-gradient-amber: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #f59e0b 100%);
+    --rg-gradient-teal: linear-gradient(135deg, #14b8a6 0%, #2dd4bf 100%);
+    --rg-shadow-soft: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    --rg-shadow-strong: 0 30px 60px -10px rgba(0, 0, 0, 0.2);
+    --rg-shadow-amber: 0 20px 40px -8px rgba(245, 158, 11, 0.25);
+    --rg-transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --rg-transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+
+.registerform {
+    min-height: 78vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, var(--rg-cloud) 0%, var(--rg-offwhite) 100%);
+    position: relative;
+    isolation: isolate;
+
+    /* Geometric pattern overlay */
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: 
+            linear-gradient(30deg, var(--rg-mist) 12%, transparent 12.5%),
+            linear-gradient(150deg, var(--rg-mist) 12%, transparent 12.5%),
+            linear-gradient(30deg, var(--rg-mist) 12%, transparent 12.5%),
+            linear-gradient(150deg, var(--rg-mist) 12%, transparent 12.5%);
+        background-size: 60px 104px;
+        background-position: 0 0, 0 0, 30px 52px, 30px 52px;
+        opacity: 0.2;
+        z-index: 0;
+    }
+
+    /* Animated accent blobs */
+    &::after {
+        content: '';
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        /* top: -100px; */
+        /* right: -100px; */
+        background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 70%);
+        border-radius: 50%;
+        z-index: 0;
+        animation: rgBlobFloat 15s ease-in-out infinite;
+    }
+}
+
+/* Floating blobs */
+.rg-blob-1 {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    /* bottom: -150px; */
+    /* left: -150px; */
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+    animation: rgBlobFloat 20s ease-in-out infinite reverse;
+}
+
+.rg-blob-2 {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    top: 40%;
+    left: 10%;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.04) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+    animation: rgBlobFloat 12s ease-in-out infinite 2s;
+}
+
+/* Main card */
+.rg-card {
+    width: 100%;
+    max-width: 540px;
+    background: var(--rg-white);
+    border-radius: 48px;
+    padding: 45px 48px;
+    box-shadow: var(--rg-shadow-soft);
+    position: relative;
+    z-index: 10;
+    animation: rgSlideUp 0.7s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+
+    /* Decorative corner elements */
+    .rg-corner {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border: 2px solid var(--rg-amber);
+        opacity: 0.2;
+        transition: var(--rg-transition-smooth);
+
+        &-tl {
+            top: 20px;
+            left: 20px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        &-br {
+            bottom: 20px;
+            right: 20px;
+            border-left: none;
+            border-top: none;
+        }
+
+        &-tr {
+            top: 20px;
+            right: 20px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        &-bl {
+            bottom: 20px;
+            left: 20px;
+            border-right: none;
+            border-top: none;
+        }
+    }
+
+    &:hover .rg-corner {
+        opacity: 0.4;
+        width: 60px;
+        height: 60px;
+    }
+}
+
+/* Header section with icon */
+.rg-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.rg-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, var(--rg-amber-light), var(--rg-amber));
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: rgMorph 8s ease-in-out infinite;
+    box-shadow: var(--rg-shadow-amber);
+
+    svg {
+        width: 35px;
+        height: 35px;
+        color: var(--rg-white);
+    }
+}
+
+.rg-header h3 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    font-family: 'Space Grotesk', 'Manrope', sans-serif;
+    color: var(--rg-deep);
+    letter-spacing: -1px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+
+    span {
+        background: linear-gradient(135deg, var(--rg-amber), var(--rg-teal));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+}
+
+.rg-header p {
+    color: var(--rg-stone);
+    font-size: 1rem;
+}
+
+/* Form fields */
+.rg-field {
+    margin-bottom: 24px;
+    position: relative;
+
+    label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--rg-slate);
+        transition: var(--rg-transition-smooth);
+        padding-left: 4px;
+    }
+
+    .rg-input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .rg-input-icon {
+            position: absolute;
+            left: 16px;
+            color: var(--rg-charcoal);
+            opacity: 0.4;
+            transition: var(--rg-transition-smooth);
+            pointer-events: none;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            font-size: 1rem;
+            border: 2px solid var(--rg-fog);
+            border-radius: 24px;
+            background: var(--rg-offwhite);
+            transition: var(--rg-transition-smooth);
+            font-family: 'Manrope', sans-serif;
+            color: var(--rg-deep);
+
+            &::placeholder {
+                color: var(--rg-mist);
+                font-weight: 300;
+            }
+
+            &:focus {
+                outline: none;
+                border-color: var(--rg-amber);
+                background: var(--rg-white);
+                box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.3);
+                transform: translateY(-2px);
+
+                + .rg-input-icon {
+                    color: var(--rg-amber);
+                    opacity: 1;
+                    transform: scale(1.1);
+                }
+            }
+
+            &:hover:not(:focus) {
+                border-color: var(--rg-mist);
+            }
+        }
+    }
+
+    &.rg-field-focused .rg-input-icon {
+        color: var(--rg-amber);
+        opacity: 1;
+    }
+}
+
+/* Password strength with new design */
+.rg-password-strength {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .rg-strength-bars {
+        flex: 1;
+        display: flex;
+        gap: 4px;
+        height: 6px;
+
+        .rg-strength-bar {
+            flex: 1;
+            height: 100%;
+            background: var(--rg-fog);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+
+            &.active-1 {
+                background: linear-gradient(90deg, #ef4444, #f87171);
+            }
+
+            &.active-2 {
+                background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            }
+
+            &.active-3 {
+                background: linear-gradient(90deg, #10b981, #34d399);
+            }
+
+            &.active-4 {
+                background: linear-gradient(90deg, #14b8a6, #2dd4bf);
+            }
+
+            &.active-5 {
+                background: linear-gradient(90deg, #6366f1, #818cf8);
+            }
+        }
+    }
+
+    .rg-strength-text {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--rg-charcoal);
+        min-width: 70px;
+        text-align: right;
+    }
+}
+
+/* Password hint */
+.rg-password-hint {
+    font-size: 0.75rem;
+    color: var(--rg-stone);
+    margin-top: 6px;
+    padding-left: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &::before {
+        content: 'ⓘ';
+        color: var(--rg-amber);
+        font-weight: 600;
+    }
+
+    &.visible {
+        color: var(--rg-amber);
+    }
+}
+
+/* Modern checkbox */
+.rg-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 25px 0;
+
+    input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
+        border: 2px solid var(--rg-mist);
+        cursor: pointer;
+        transition: var(--rg-transition-smooth);
+        accent-color: var(--rg-amber);
+
+        &:checked {
+            border-color: var(--rg-amber);
+        }
+    }
+
+    label {
+        font-size: 0.9rem;
+        color: var(--rg-charcoal);
+        cursor: pointer;
+
+        a {
+            color: var(--rg-amber);
+            font-weight: 600;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+/* Submit button */
+.rg-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 100px;
+    border: none;
+    background: var(--rg-gradient-midnight);
+    color: var(--rg-white);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--rg-transition-bounce);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    .rg-btn-text {
+        z-index: 2;
+        transition: var(--rg-transition-smooth);
+    }
+
+    .rg-btn-icon {
+        z-index: 2;
+        transition: var(--rg-transition-smooth);
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--rg-amber), var(--rg-teal));
+        transform: translate(-50%, -50%);
+        transition: width 0.6s ease, height 0.6s ease;
+        z-index: 1;
+    }
+
+    &:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: var(--rg-shadow-strong);
+
+        .rg-btn-icon {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        &::before {
+            width: 500px;
+            height: 500px;
+        }
+    }
+
+    &:active {
+        transform: translateY(0) scale(0.98);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+}
+
+/* Divider with modern style */
+.rg-divider {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 30px 0 20px;
+
+    .rg-divider-line {
+        flex: 1;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--rg-mist), transparent);
+    }
+
+    .rg-divider-text {
+        color: var(--rg-stone);
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+}
+
+/* Login link */
+.rg-login-link {
+    text-align: center;
+    margin-top: 25px;
+
+    p {
+        color: var(--rg-stone);
+        font-size: 0.95rem;
+    }
+
+    a {
+        color: var(--rg-amber);
+        font-weight: 700;
+        text-decoration: none;
+        position: relative;
+        padding-bottom: 2px;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--rg-amber), var(--rg-teal));
+            transition: width 0.3s ease;
+        }
+
+        &:hover::after {
+            width: 100%;
+        }
+    }
+}
+
+/* Alerts */
+.rg-alert {
+    border-radius: 24px;
+    padding: 16px 20px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: rgSlideIn 0.4s ease-out;
+
+    &-danger {
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(245, 158, 11, 0.05));
+        border-left: 4px solid #ef4444;
+
+        .rg-alert-icon {
+            color: #ef4444;
+        }
+    }
+
+    &-success {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(20, 184, 166, 0.05));
+        border-left: 4px solid #10b981;
+
+        .rg-alert-icon {
+            color: #10b981;
+        }
+    }
+
+    .rg-alert-icon {
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+
+    .rg-alert-message {
+        color: var(--rg-deep);
+        font-size: 0.95rem;
+    }
+}
+
+/* Animations */
+@keyframes rgSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes rgSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes rgBlobFloat {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+    66% {
+        transform: translate(-20px, 20px) scale(0.95);
+    }
+}
+
+@keyframes rgMorph {
+    0%, 100% {
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    }
+    33% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    66% {
+        border-radius: 40% 60% 70% 30% / 40% 50% 50% 60%;
+    }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .rg-card {
+        padding: 35px 25px;
+    }
+
+    .rg-header h3 {
+        font-size: 2rem;
+    }
+
+    .rg-corner {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .registerform {
+        padding: 20px 15px;
+    }
+
+    .rg-card {
+        padding: 30px 20px;
+    }
+
+    .rg-header h3 {
+        font-size: 1.8rem;
+    }
+
+    .form-control {
+        padding: 12px 16px 12px 44px;
+    }
+}
+</style>
+
 {% extends 'base/base.html' %}
+{% load static %}
 
 {% block title %}
-Register
+Register - Solevyn
 {% endblock %}
 
 {% block content %}
 <section class="registerform">
-    <div class="card mx-auto w-50">
-        <h3 class="text-center">
-            Register Account
-        </h3>
+    <!-- Floating background elements -->
+    <div class="rg-blob-1"></div>
+    <div class="rg-blob-2"></div>
 
-        <form method="post" novalidate>
+    <div class="rg-card mx-auto">
+        <!-- Decorative corners -->
+        <div class="rg-corner rg-corner-tl"></div>
+        <div class="rg-corner rg-corner-tr"></div>
+        <div class="rg-corner rg-corner-bl"></div>
+        <div class="rg-corner rg-corner-br"></div>
+
+        <!-- Header with icon -->
+        <div class="rg-header">
+            <div class="rg-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 7L9 18L4 13" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h3>Join <span>Solevyn</span></h3>
+            <p>Start your premium footwear journey</p>
+        </div>
+
+        <form method="post" novalidate id="registerForm">
             {% csrf_token %}
 
             {% if form.non_field_errors %}
-                <div class="alert alert-danger">
-                    {{ form.non_field_errors }}
+                <div class="rg-alert rg-alert-danger">
+                    <span class="rg-alert-icon">!</span>
+                    <div class="rg-alert-message">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
                 </div>
             {% endif %}
 
             {% for field in form %}
-                {% include 'base/includes/basic_form_field.html' %}
+                <div class="rg-field" id="field-{{ field.name }}">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <div class="rg-input-wrapper">
+                        <span class="rg-input-icon">
+                            {% if 'name' in field.name %}
+                                👤
+                            {% elif 'email' in field.name %}
+                                ✉️
+                            {% elif 'password' in field.name %}
+                                🔒
+                            {% else %}
+                                📝
+                            {% endif %}
+                        </span>
+                        {{ field }}
+                    </div>
+                    
+                    {% if field.name == 'password1' %}
+                    <div class="rg-password-strength">
+                        <div class="rg-strength-bars">
+                            <div class="rg-strength-bar" id="bar1"></div>
+                            <div class="rg-strength-bar" id="bar2"></div>
+                            <div class="rg-strength-bar" id="bar3"></div>
+                            <div class="rg-strength-bar" id="bar4"></div>
+                            <div class="rg-strength-bar" id="bar5"></div>
+                        </div>
+                        <span class="rg-strength-text" id="strength-text">Enter password</span>
+                    </div>
+                    <div class="rg-password-hint" id="password-hint">
+                        Use 8+ chars with letters, numbers & symbols
+                    </div>
+                    {% endif %}
+
+                    {% if field.name == 'password2' %}
+                    <div class="rg-password-match" id="match-indicator" style="margin-top: 8px; font-size: 0.75rem; display: flex; align-items: center; gap: 5px;">
+                        <span id="match-icon">⚪</span>
+                        <span id="match-text">Passwords must match</span>
+                    </div>
+                    {% endif %}
+
+                    {% if field.errors %}
+                    <div class="rg-alert rg-alert-danger" style="margin-top: 10px; padding: 10px 15px;">
+                        <span class="rg-alert-icon">!</span>
+                        <div class="rg-alert-message">
+                            {{ field.errors }}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
             {% endfor %}
 
-            <button type="submit" class="btn btn-outline-info">
-                Register
+            <!-- Terms checkbox -->
+            <div class="rg-checkbox">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">
+                    I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                </label>
+            </div>
+
+            <button type="submit" class="rg-btn" id="submitBtn">
+                <span class="rg-btn-text">Create Account</span>
+                <span class="rg-btn-icon">→</span>
+                <span class="rg-btn-loader" style="display: none;">⏳</span>
             </button>
 
-            <p class="text-center mt-4 mb-0">
-                Already have an account?
-                <a href="{% url 'signin' %}">Sign in</a>
-            </p>
+            <div class="rg-divider">
+                <div class="rg-divider-line"></div>
+                <span class="rg-divider-text">already registered?</span>
+                <div class="rg-divider-line"></div>
+            </div>
+
+            <div class="rg-login-link">
+                <p>
+                    <a href="{% url 'signin' %}">Sign in to your account</a>
+                </p>
+            </div>
         </form>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('registerForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.rg-btn-text');
+    const btnLoader = submitBtn.querySelector('.rg-btn-loader');
+    const btnIcon = submitBtn.querySelector('.rg-btn-icon');
+
+    // Password strength checker with new UI
+    function updatePasswordStrength(password) {
+        const bars = ['bar1', 'bar2', 'bar3', 'bar4', 'bar5'].map(id => document.getElementById(id));
+        const strengthText = document.getElementById('strength-text');
+        
+        let strength = 0;
+        if (password.length >= 8) strength++;
+        if (password.match(/[a-z]+/)) strength++;
+        if (password.match(/[A-Z]+/)) strength++;
+        if (password.match(/[0-9]+/)) strength++;
+        if (password.match(/[$@#&!%*?]+/)) strength++;
+
+        // Reset bars
+        bars.forEach(bar => {
+            bar.className = 'rg-strength-bar';
+        });
+
+        // Update bars based on strength
+        if (password.length === 0) {
+            strengthText.textContent = 'Enter password';
+            strengthText.style.color = 'var(--rg-charcoal)';
+        } else {
+            for (let i = 0; i < strength; i++) {
+                bars[i].classList.add(`active-${strength}`);
+            }
+
+            // Update text
+            if (strength <= 2) {
+                strengthText.textContent = 'Weak';
+                strengthText.style.color = '#ef4444';
+            } else if (strength <= 4) {
+                strengthText.textContent = 'Medium';
+                strengthText.style.color = '#f59e0b';
+            } else {
+                strengthText.textContent = 'Strong';
+                strengthText.style.color = '#10b981';
+            }
+        }
+    }
+
+    // Password match checker
+    function checkPasswordMatch() {
+        const password1 = document.getElementById('id_password1');
+        const password2 = document.getElementById('id_password2');
+        const matchIcon = document.getElementById('match-icon');
+        const matchText = document.getElementById('match-text');
+
+        if (!password1 || !password2 || !password2.value) return;
+
+        if (password1.value === password2.value) {
+            matchIcon.textContent = '✅';
+            matchText.textContent = 'Passwords match';
+            matchText.style.color = '#10b981';
+            password2.style.borderColor = '#10b981';
+        } else {
+            matchIcon.textContent = '❌';
+            matchText.textContent = 'Passwords do not match';
+            matchText.style.color = '#ef4444';
+            password2.style.borderColor = '#ef4444';
+        }
+    }
+
+    // Add event listeners
+    const password1 = document.getElementById('id_password1');
+    const password2 = document.getElementById('id_password2');
+    const termsCheckbox = document.getElementById('terms');
+
+    if (password1) {
+        password1.addEventListener('input', function() {
+            updatePasswordStrength(this.value);
+            checkPasswordMatch();
+        });
+    }
+
+    if (password2) {
+        password2.addEventListener('input', checkPasswordMatch);
+    }
+
+    // Form submission
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            // Validate passwords match
+            if (password1 && password2 && password1.value !== password2.value) {
+                e.preventDefault();
+                alert('Passwords do not match!');
+                return;
+            }
+
+            // Validate terms
+            if (termsCheckbox && !termsCheckbox.checked) {
+                e.preventDefault();
+                alert('Please accept the Terms of Service and Privacy Policy');
+                return;
+            }
+
+            // Show loading state
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnIcon.style.display = 'none';
+            btnLoader.style.display = 'inline-block';
+            btnLoader.textContent = '⏳ Creating Account...';
+        });
+    }
+
+    // Floating label effect
+    const inputs = document.querySelectorAll('.form-control');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.closest('.rg-field').classList.add('rg-field-focused');
+        });
+
+        input.addEventListener('blur', function() {
+            this.closest('.rg-field').classList.remove('rg-field-focused');
+        });
+    });
+
+    // Staggered animation for fields
+    const fields = document.querySelectorAll('.rg-field');
+    fields.forEach((field, index) => {
+        field.style.animation = `rgSlideUp 0.5s ease-out ${index * 0.1 + 0.3}s both`;
+    });
+});
+</script>
 {% endblock %}

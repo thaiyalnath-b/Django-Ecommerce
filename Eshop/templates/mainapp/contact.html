@@ -1,9 +1,675 @@
+<style>
+:root {
+    --fw-black: #0a0a0c;
+    --fw-charcoal: #1a1a24;
+    --fw-graphite: #2a2a35;
+    --fw-silver: #e8e8ed;
+    --fw-platinum: #f0f0f5;
+    --fw-gold: #d4af37;
+    --fw-gold-light: #f5e7c8;
+    --fw-white: #ffffff;
+    --fw-offwhite: #fafafc;
+    --fw-gradient-dark: linear-gradient(165deg, #0b0b12 0%, #1e1e2a 100%);
+    --fw-gradient-light: linear-gradient(165deg, #ffffff 0%, #f5f5fa 100%);
+    --fw-gradient-gold: linear-gradient(135deg, #d4af37 0%, #f5d742 100%);
+    --fw-shadow-sm: 0 20px 40px rgba(0, 0, 0, 0.06);
+    --fw-shadow-md: 0 30px 60px rgba(0, 0, 0, 0.08);
+    --fw-shadow-lg: 0 50px 100px rgba(0, 0, 0, 0.12);
+    --fw-shadow-gold: 0 20px 40px rgba(212, 175, 55, 0.2);
+    --fw-transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.fw-contact {
+    font-family: 'Manrope', sans-serif;
+    background: var(--fw-offwhite);
+    color: var(--fw-black);
+    overflow-x: hidden;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.02) 0%, transparent 60%);
+        pointer-events: none;
+        z-index: 0;
+    }
+}
+
+.fw-contact-hero {
+    min-height: 87.7vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--fw-gradient-dark);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: 
+            radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.2) 0%, transparent 50%),
+            radial-gradient(circle at 90% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
+        animation: fwPulseGlow 8s ease-in-out infinite;
+        z-index: 1;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(45deg, transparent 0px, transparent 25px, rgba(255, 255, 255, 0.02) 25px, rgba(255, 255, 255, 0.02) 50px);
+        z-index: 1;
+    }
+}
+
+.fw-contact-hero-inner {
+    position: relative;
+    text-align: center;
+    max-width: 900px;
+    padding: 0 30px;
+    z-index: 2;
+    animation: fwFadeInUp 1.2s ease-out;
+}
+
+.fw-label {
+    display: inline-block;
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--fw-gold-light), var(--fw-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 30px;
+    font-weight: 600;
+    position: relative;
+
+    &::before, &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 40px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--fw-gold), transparent);
+    }
+
+    &::before {
+        left: -60px;
+    }
+
+    &::after {
+        right: -60px;
+    }
+}
+
+.fw-contact-hero-inner h1 {
+    font-family: 'Playfair Display', 'Libre Baskerville', serif;
+    font-size: 4.5rem;
+    font-weight: 800;
+    color: var(--fw-white);
+    margin-bottom: 25px;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    letter-spacing: -1px;
+    line-height: 1.2;
+}
+
+.fw-contact-hero-inner p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 2;
+    max-width: 650px;
+    margin: 0 auto;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+}
+
+.fw-contact-wrap {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 80px 30px;
+    position: relative;
+    z-index: 2;
+}
+
+.fw-contact-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 100px;
+    margin-bottom: 150px;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 2px;
+        height: 80%;
+        background: linear-gradient(180deg, transparent, var(--fw-gold), rgba(212, 175, 55, 0.3), var(--fw-gold), transparent);
+        opacity: 0.3;
+    }
+}
+
+.fw-contact-info {
+    padding: 40px;
+    background: var(--fw-white);
+    border-radius: 40px;
+    box-shadow: var(--fw-shadow-md);
+    position: relative;
+    overflow: hidden;
+    transition: var(--fw-transition);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 0;
+        background: linear-gradient(180deg, var(--fw-gold), #b89b4b);
+        transition: height 0.6s ease;
+    }
+
+    &::after {
+        content: '✦';
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 4rem;
+        color: rgba(212, 175, 55, 0.05);
+        font-family: serif;
+    }
+
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--fw-shadow-lg);
+
+        &::before {
+            height: 100%;
+        }
+    }
+
+    h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        margin-bottom: 50px;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--fw-gold), transparent);
+        }
+    }
+}
+
+.fw-info-item {
+    margin-bottom: 40px;
+    position: relative;
+    padding-left: 30px;
+    transition: var(--fw-transition);
+
+    &::before {
+        content: '●';
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: var(--fw-gold);
+        font-size: 1.2rem;
+        opacity: 0.7;
+    }
+
+    &:hover {
+        transform: translateX(10px);
+
+        &::before {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+    }
+
+    span {
+        font-size: 0.85rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        background: linear-gradient(135deg, var(--fw-gold), #b89b4b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 600;
+    }
+
+    p {
+        font-size: 1.2rem;
+        margin-top: 10px;
+        color: var(--fw-charcoal);
+        font-weight: 500;
+    }
+}
+
+.fw-info-note {
+    margin-top: 60px;
+    padding: 25px;
+    background: rgba(212, 175, 55, 0.05);
+    border-radius: 20px;
+    font-size: 1rem;
+    color: var(--fw-graphite);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '⏤';
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        font-size: 2rem;
+        color: var(--fw-gold);
+        opacity: 0.3;
+    }
+}
+
+.fw-contact-form {
+    padding: 40px;
+    background: var(--fw-white);
+    border-radius: 40px;
+    box-shadow: var(--fw-shadow-md);
+    position: relative;
+    overflow: hidden;
+    transition: var(--fw-transition);
+
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 150px;
+        height: 150px;
+        background: radial-gradient(circle, rgba(212, 175, 55, 0.1), transparent);
+        border-radius: 50%;
+        transform: translate(30%, 30%);
+    }
+
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--fw-shadow-lg);
+    }
+
+    h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        margin-bottom: 50px;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--fw-gold), transparent);
+        }
+    }
+}
+
+.fw-field {
+    margin-bottom: 35px;
+    position: relative;
+
+    label {
+        display: block;
+        font-size: 0.8rem;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        color: var(--fw-graphite);
+        font-weight: 600;
+        transition: var(--fw-transition);
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 18px 22px;
+        border-radius: 20px;
+        border: 2px solid rgba(0, 0, 0, 0.03);
+        background: rgba(0, 0, 0, 0.01);
+        font-family: 'Manrope', sans-serif;
+        font-size: 1rem;
+        outline: none;
+        transition: var(--fw-transition);
+        color: var(--fw-black);
+
+        &::placeholder {
+            color: rgba(0, 0, 0, 0.2);
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        &:focus {
+            border-color: var(--fw-gold);
+            background: var(--fw-white);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+    }
+
+    textarea {
+        min-height: 160px;
+        resize: none;
+    }
+
+    &:focus-within label {
+        color: var(--fw-gold);
+        transform: translateX(5px);
+    }
+}
+
+.fw-btn {
+    padding: 20px 60px;
+    border-radius: 60px;
+    background: var(--fw-gradient-gold);
+    color: var(--fw-black);
+    border: none;
+    font-size: 0.95rem;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--fw-transition);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    text-transform: uppercase;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.8s ease, height 0.8s ease;
+    }
+
+    &:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: var(--fw-shadow-gold);
+
+        &::before {
+            width: 400px;
+            height: 400px;
+        }
+    }
+
+    &:active {
+        transform: translateY(0) scale(0.98);
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+    }
+}
+
+.fw-contact-signature {
+    text-align: center;
+    padding: 120px 60px;
+    border-radius: 50px;
+    background: var(--fw-gradient-dark);
+    color: var(--fw-white);
+    margin-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.15), transparent 70%);
+        z-index: 1;
+        animation: fwPulseGlow 4s ease-in-out infinite;
+    }
+
+    &::after {
+        content: 'Solevyn';
+        position: absolute;
+        bottom: -30px;
+        right: -30px;
+        font-size: 10rem;
+        font-weight: 800;
+        font-family: 'Playfair Display', serif;
+        color: rgba(255, 255, 255, 0.02);
+        z-index: 1;
+        transform: rotate(-10deg);
+    }
+
+    h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.2rem;
+        margin-bottom: 25px;
+        position: relative;
+        z-index: 2;
+        text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    p {
+        font-size: 1.2rem;
+        line-height: 2;
+        color: rgba(255, 255, 255, 0.85);
+        max-width: 700px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+    }
+}
+
+.fw-success-message {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.05), rgba(212, 175, 55, 0.05));
+    border-radius: 30px;
+    margin-top: 20px;
+    border: 2px solid var(--fw-gold);
+    animation: fwFadeInUp 0.5s ease-out;
+
+    h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        color: var(--fw-gold);
+        margin-bottom: 15px;
+    }
+
+    p {
+        color: var(--fw-graphite);
+        font-size: 1rem;
+    }
+}
+
+@keyframes fwFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fwPulseGlow {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes fwFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@media (max-width: 1200px) {
+    .fw-contact-hero-inner h1 {
+        font-size: 3.8rem;
+    }
+
+    .fw-contact-grid {
+        gap: 60px;
+    }
+}
+
+@media (max-width: 992px) {
+    .fw-contact-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+
+        &::before {
+            display: none;
+        }
+    }
+
+    .fw-contact-info, .fw-contact-form {
+        padding: 30px;
+
+        h2 {
+            font-size: 2.2rem;
+        }
+    }
+
+    .fw-contact-hero-inner h1 {
+        font-size: 3.2rem;
+    }
+
+    .fw-label::before, .fw-label::after {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .fw-contact-wrap {
+        padding: 60px 20px;
+    }
+
+    .fw-contact-hero-inner {
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    .fw-contact-info, .fw-contact-form {
+        h2 {
+            font-size: 2rem;
+        }
+    }
+
+    .fw-info-item {
+        p {
+            font-size: 1.1rem;
+        }
+    }
+
+    .fw-contact-signature {
+        padding: 80px 30px;
+
+        h2 {
+            font-size: 2.5rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    .fw-btn {
+        padding: 18px 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .fw-contact-hero-inner {
+        h1 {
+            font-size: 2rem;
+        }
+    }
+
+    .fw-label {
+        font-size: 0.7rem;
+    }
+
+    .fw-contact-info, .fw-contact-form {
+        padding: 25px;
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 35px;
+        }
+    }
+
+    .fw-info-item {
+        padding-left: 20px;
+
+        span {
+            font-size: 0.75rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    .fw-field {
+        input, textarea {
+            padding: 15px 18px;
+            font-size: 0.95rem;
+        }
+    }
+
+    .fw-contact-signature {
+        padding: 60px 20px;
+
+        h2 {
+            font-size: 2rem;
+        }
+    }
+}
+</style>
+
 {% extends 'base/base.html' %}
 {% load static %}
 
 {% block title %}
-Contact
+Contact - Solevyn
 {% endblock %}
+
 {% block content %}
 <section class="fw-contact">
     <div class="fw-contact-hero">
@@ -15,9 +681,7 @@ Contact
     </div>
 
     <div class="fw-contact-wrap">
-
         <div class="fw-contact-grid">
-
             <div class="fw-contact-info">
                 <h2>Contact Information</h2>
 
@@ -44,26 +708,27 @@ Contact
             <div class="fw-contact-form">
                 <h2>Send a Message</h2>
 
-                <form>
-                    <div class="fw-field">
-                        <label>Name</label>
-                        <input type="text" placeholder="Your name">
-                    </div>
+                <div id="form-container">
+                    <form id="reach" action="https://formspree.io/f/mblzzgaa" method="POST">
+                        <div class="fw-field">
+                            <label>Name</label>
+                            <input type="text" name="name" placeholder="Your Name" required />
+                        </div>
 
-                    <div class="fw-field">
-                        <label>Email</label>
-                        <input type="email" placeholder="Your email">
-                    </div>
+                        <div class="fw-field">
+                            <label>Email</label>
+                            <input type="email" name="email" placeholder="Your Email" required />
+                        </div>
 
-                    <div class="fw-field">
-                        <label>Message</label>
-                        <textarea placeholder="Write your message"></textarea>
-                    </div>
+                        <div class="fw-field">
+                            <label>Message</label>
+                            <textarea name="message" id="msg" placeholder="Your Message" required></textarea>
+                        </div>
 
-                    <button type="submit" class="fw-btn">Send Message</button>
-                </form>
+                        <button type="submit" class="fw-btn" id="submit-btn">Send Message</button>
+                    </form>
+                </div>
             </div>
-
         </div>
 
         <div class="fw-contact-signature">
@@ -73,8 +738,89 @@ Contact
                 We're here to support your journey.
             </p>
         </div>
-
     </div>
 </section>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('reach');
+    const submitBtn = document.getElementById('submit-btn');
+    const formContainer = document.getElementById('form-container');
+
+    if (form) {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            // Remove any existing success/error messages
+            const existingMessage = document.querySelector('.fw-success-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Success - show success message
+                    form.reset();
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'fw-success-message';
+                    successMessage.innerHTML = `
+                        <h3>Thank You! ✦</h3>
+                        <p>Your message has been sent successfully. We'll get back to you within 24 hours.</p>
+                    `;
+                    formContainer.appendChild(successMessage);
+                    
+                    // Re-enable button
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Message';
+                } else {
+                    // Error
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                // Show error message
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'fw-success-message';
+                errorMessage.style.background = 'linear-gradient(135deg, rgba(220, 53, 69, 0.05), rgba(212, 175, 55, 0.05))';
+                errorMessage.style.borderColor = '#dc3545';
+                errorMessage.innerHTML = `
+                    <h3 style="color: #dc3545;">Oops! Something went wrong</h3>
+                    <p>Please try again later or contact us directly at support@solevyn.com</p>
+                `;
+                formContainer.appendChild(errorMessage);
+                
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+            }
+        });
+    }
+
+    // Add real-time validation styling
+    const inputs = document.querySelectorAll('.fw-field input, .fw-field textarea');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+
+        input.addEventListener('blur', function() {
+            if (!this.value) {
+                this.parentElement.classList.remove('focused');
+            }
+        });
+    });
+});
+</script>
 {% endblock %}
