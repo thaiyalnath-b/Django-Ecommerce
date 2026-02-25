@@ -1,19 +1,944 @@
+<style>
+:root {
+    --otp-deep: #0f172a;
+    --otp-slate: #1e293b;
+    --otp-charcoal: #334155;
+    --otp-stone: #475569;
+    --otp-mist: #cbd5e1;
+    --otp-fog: #e2e8f0;
+    --otp-cloud: #f1f5f9;
+    --otp-emerald: #10b981;
+    --otp-emerald-light: #34d399;
+    --otp-emerald-glow: #6ee7b7;
+    --otp-white: #ffffff;
+    --otp-offwhite: #f8fafc;
+    --otp-gradient-emerald: linear-gradient(135deg, #10b981 0%, #34d399 50%, #10b981 100%);
+    --otp-shadow-soft: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    --otp-shadow-emerald: 0 20px 40px -8px rgba(16, 185, 129, 0.25);
+    --otp-transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --otp-transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.verifyotp {
+    min-height: 84.4vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(145deg, var(--otp-cloud) 0%, var(--otp-offwhite) 100%);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.verifyotp::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    top: -200px;
+    right: -200px;
+    animation: otpFloat 20s ease-in-out infinite;
+    z-index: 0;
+}
+
+.verifyotp::after {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.03) 0%, transparent 70%);
+    border-radius: 50%;
+    bottom: -200px;
+    left: -200px;
+    animation: otpFloat 25s ease-in-out infinite reverse;
+    z-index: 0;
+}
+
+.otp-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--otp-emerald);
+    border-radius: 50%;
+    opacity: 0.2;
+    animation: otpParticleFloat 15s linear infinite;
+}
+
+.otp-particle:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    animation-delay: -3s;
+}
+
+.otp-particle:nth-child(2) {
+    top: 70%;
+    right: 15%;
+    width: 6px;
+    height: 6px;
+    animation-delay: -7s;
+}
+
+.otp-particle:nth-child(3) {
+    bottom: 30%;
+    left: 20%;
+    animation-delay: -5s;
+}
+
+.otp-particle:nth-child(4) {
+    top: 40%;
+    right: 25%;
+    width: 3px;
+    height: 3px;
+    animation-delay: -2s;
+}
+
+.otp-card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--otp-white);
+    border-radius: 48px;
+    padding: 48px 40px;
+    box-shadow: var(--otp-shadow-soft);
+    position: relative;
+    z-index: 10;
+    animation: otpSlideUp 0.7s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+}
+
+.otp-corner {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--otp-emerald);
+    opacity: 0.1;
+    transition: var(--otp-transition-smooth);
+}
+
+.otp-corner-tl {
+    top: -40px;
+    left: -40px;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 48px 0 0 0;
+}
+
+.otp-corner-br {
+    bottom: -40px;
+    right: -40px;
+    border-left: none;
+    border-top: none;
+    border-radius: 0 0 48px 0;
+}
+
+.otp-card:hover .otp-corner {
+    opacity: 0.3;
+    width: 100px;
+    height: 100px;
+}
+
+.otp-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--otp-emerald), var(--otp-emerald-light), var(--otp-emerald), transparent);
+    background-size: 200% 100%;
+    animation: otpGradientShift 3s ease infinite;
+}
+
+.otp-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.otp-icon-wrapper {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 25px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.1));
+    border-radius: 40% 60% 60% 40% / 40% 50% 50% 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: otpMorph 8s ease-in-out infinite;
+    border: 2px solid rgba(16, 185, 129, 0.2);
+}
+
+.otp-icon-wrapper svg {
+    width: 45px;
+    height: 45px;
+    color: var(--otp-emerald);
+    animation: otpPulse 3s ease-in-out infinite;
+}
+
+.otp-header h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    font-family: 'Space Grotesk', 'Manrope', sans-serif;
+    color: var(--otp-deep);
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.otp-header h2 span {
+    background: linear-gradient(135deg, var(--otp-emerald), var(--otp-emerald-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.otp-header p {
+    color: var(--otp-stone);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.otp-timer {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(52, 211, 153, 0.05));
+    border-radius: 40px;
+    padding: 12px 20px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: 1px solid rgba(16, 185, 129, 0.15);
+    animation: otpSlideIn 0.5s ease-out;
+}
+
+.otp-timer-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(16, 185, 129, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: var(--otp-emerald);
+}
+
+.otp-timer-text {
+    color: var(--otp-charcoal);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.otp-timer-text strong {
+    color: var(--otp-emerald);
+    font-size: 1.1rem;
+    margin-left: 5px;
+}
+
+.otp-field {
+    margin-bottom: 30px;
+}
+
+.otp-field label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--otp-slate);
+    letter-spacing: 0.5px;
+    padding-left: 8px;
+}
+
+.otp-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.otp-digit {
+    width: 60px;
+    height: 70px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    border: 2px solid var(--otp-fog);
+    border-radius: 20px;
+    background: var(--otp-offwhite);
+    transition: var(--otp-transition-smooth);
+    color: var(--otp-deep);
+    font-family: 'Space Grotesk', monospace;
+}
+
+.otp-digit:focus {
+    outline: none;
+    border-color: var(--otp-emerald);
+    background: var(--otp-white);
+    box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.3);
+    transform: translateY(-2px);
+}
+
+.otp-digit:not(:placeholder-shown) {
+    border-color: var(--otp-emerald-light);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), transparent);
+}
+
+.otp-digit.error {
+    border-color: #ef4444;
+    animation: otpShake 0.4s ease-out;
+}
+
+.otp-alert {
+    border-radius: 30px;
+    padding: 16px 24px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: otpSlideIn 0.4s ease-out;
+    border-left: 4px solid transparent;
+}
+
+.otp-alert-error {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(245, 158, 11, 0.05));
+    border-left-color: #ef4444;
+}
+
+.otp-alert-error .otp-alert-icon {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.otp-alert-success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(52, 211, 153, 0.05));
+    border-left-color: #10b981;
+}
+
+.otp-alert-success .otp-alert-icon {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+.otp-alert-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.otp-alert-message {
+    color: var(--otp-deep);
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+.otp-alert-close {
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.otp-alert-close:hover {
+    opacity: 1;
+}
+
+.otp-btn {
+    width: 100%;
+    padding: 18px 0;
+    border-radius: 50px;
+    border: none;
+    background: var(--otp-gradient-emerald);
+    color: var(--otp-white);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: var(--otp-transition-bounce);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+
+.otp-btn-text {
+    z-index: 2;
+    transition: var(--otp-transition-smooth);
+}
+
+.otp-btn-icon {
+    z-index: 2;
+    transition: var(--otp-transition-smooth);
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.otp-btn-loader {
+    z-index: 2;
+    font-size: 1.2rem;
+}
+
+.otp-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+    transform: translate(-50%, -50%);
+    transition: width 0.8s ease, height 0.8s ease;
+    z-index: 1;
+}
+
+.otp-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--otp-shadow-emerald);
+}
+
+.otp-btn:hover .otp-btn-icon {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.otp-btn:hover::before {
+    width: 500px;
+    height: 500px;
+}
+
+.otp-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.otp-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.otp-resend {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.otp-resend p {
+    color: var(--otp-stone);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.otp-resend-link {
+    color: var(--otp-emerald);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--otp-transition-smooth);
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.otp-resend-link:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.otp-resend-link svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.otp-resend-link:hover:not(:disabled) {
+    color: var(--otp-emerald-light);
+}
+
+.otp-resend-link:hover:not(:disabled) svg {
+    transform: rotate(180deg);
+}
+
+.otp-back-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.otp-back-link a {
+    color: var(--otp-stone);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--otp-transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.otp-back-link a svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.otp-back-link a:hover {
+    color: var(--otp-emerald);
+}
+
+.otp-back-link a:hover svg {
+    transform: translateX(-3px);
+}
+
+@keyframes otpSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes otpSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes otpFloat {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(50px, -50px) scale(1.1);
+    }
+    66% {
+        transform: translate(-30px, 30px) scale(0.9);
+    }
+}
+
+@keyframes otpParticleFloat {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.2;
+    }
+    50% {
+        transform: translate(30px, -30px) scale(1.5);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.2;
+    }
+}
+
+@keyframes otpMorph {
+    0%, 100% {
+        border-radius: 40% 60% 60% 40% / 40% 50% 50% 60%;
+    }
+    33% {
+        border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%;
+    }
+    66% {
+        border-radius: 30% 70% 50% 50% / 50% 50% 70% 30%;
+    }
+}
+
+@keyframes otpPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes otpGradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes otpShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+}
+
+@keyframes otpCountdown {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: 283; }
+}
+
+@media (max-width: 768px) {
+    .otp-card {
+        padding: 40px 30px;
+        max-width: 420px;
+    }
+
+    .otp-header h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .verifyotp {
+        padding: 30px 15px;
+    }
+
+    .otp-card {
+        padding: 35px 25px;
+    }
+
+    .otp-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .otp-digit {
+        width: 50px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+
+    .otp-timer {
+        padding: 10px 16px;
+    }
+}
+
+@media (max-width: 400px) {
+    .otp-card {
+        padding: 30px 20px;
+    }
+
+    .otp-header h2 {
+        font-size: 1.6rem;
+    }
+
+    .otp-icon-wrapper {
+        width: 75px;
+        height: 75px;
+    }
+
+    .otp-icon-wrapper svg {
+        width: 35px;
+        height: 35px;
+    }
+
+    .otp-digit {
+        width: 45px;
+        height: 55px;
+        font-size: 1.6rem;
+    }
+}
+</style>
+
 {% extends "base/base.html" %}
+
+{% block title %}
+Verify OTP - Solevyn
+{% endblock %}
+
 {% block content %}
 <section class="verifyotp">
-    <div class="container">
-    <h2>Enter OTP</h2>
+    <div class="otp-particle"></div>
+    <div class="otp-particle"></div>
+    <div class="otp-particle"></div>
+    <div class="otp-particle"></div>
 
-    {% if error %}
-    <div class="alert alert-danger">
-        {{error}}
+    <div class="otp-card mx-auto">
+        <div class="otp-corner otp-corner-tl"></div>
+        <div class="otp-corner otp-corner-br"></div>
+
+        <div class="otp-header">
+            <div class="otp-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="20" rx="4" stroke-linecap="round"/>
+                    <path d="M7 2v4M17 2v4M2 10h20" stroke-linecap="round"/>
+                    <circle cx="12" cy="16" r="1" fill="currentColor"/>
+                    <circle cx="16" cy="16" r="1" fill="currentColor"/>
+                    <circle cx="8" cy="16" r="1" fill="currentColor"/>
+                </svg>
+            </div>
+            <h2>Verify <span>OTP</span></h2>
+            <p>Enter the 6-digit code sent to your email</p>
+        </div>
+
+        {% if error %}
+        <div class="otp-alert otp-alert-error" id="errorAlert">
+            <div class="otp-alert-icon">!</div>
+            <div class="otp-alert-message">{{ error }}</div>
+            <div class="otp-alert-close" onclick="this.parentElement.remove()">✕</div>
+        </div>
+        {% endif %}
+
+        <div class="otp-timer" id="otpTimer">
+            <div class="otp-timer-icon">⏱️</div>
+            <div class="otp-timer-text">
+                Code expires in <strong id="timerDisplay">05:00</strong>
+            </div>
+        </div>
+
+        <form method="post" id="otpForm">
+            {% csrf_token %}
+            
+            <div class="otp-field">
+                <label>Enter Verification Code</label>
+                <div class="otp-input-wrapper">
+                    <input type="text" class="otp-digit" id="digit1" maxlength="1" pattern="[0-9]" inputmode="numeric" autofocus>
+                    <input type="text" class="otp-digit" id="digit2" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                    <input type="text" class="otp-digit" id="digit3" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                    <input type="text" class="otp-digit" id="digit4" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                    <input type="text" class="otp-digit" id="digit5" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                    <input type="text" class="otp-digit" id="digit6" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                </div>
+                <input type="hidden" name="otp" id="otpHidden">
+            </div>
+
+            <button type="submit" class="otp-btn" id="submitBtn">
+                <span class="otp-btn-text">Verify OTP</span>
+                <span class="otp-btn-icon">→</span>
+                <span class="otp-btn-loader" style="display: none;">⏳</span>
+            </button>
+
+            <div class="otp-resend">
+                <p>Didn't receive the code?</p>
+                <button type="button" class="otp-resend-link" id="resendBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 4v6h6" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3.51 14a9 9 0 1 0 2.13-9.36L1 10" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Resend OTP
+                </button>
+            </div>
+
+            <div class="otp-back-link">
+                <a href="{% url 'send_otp' %}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Use different email
+                </a>
+            </div>
+        </form>
     </div>
-    {% endif %}
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="otp" class="form-control" placeholder="Enter OTP" required>
-        <button type="submit" class="btn btn-success">Verify OTP</button>
-    </form>
-</div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('otpForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.otp-btn-text');
+    const btnIcon = submitBtn.querySelector('.otp-btn-icon');
+    const btnLoader = submitBtn.querySelector('.otp-btn-loader');
+    const digits = document.querySelectorAll('.otp-digit');
+    const otpHidden = document.getElementById('otpHidden');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const resendBtn = document.getElementById('resendBtn');
+
+    let timeLeft = 300;
+    let timerInterval;
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = '00:00';
+                timerDisplay.style.color = '#ef4444';
+                
+                digits.forEach(digit => {
+                    digit.disabled = true;
+                    digit.classList.add('error');
+                });
+                
+                resendBtn.disabled = false;
+            } else {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }, 1000);
+    }
+
+    startTimer();
+
+    digits.forEach((digit, index) => {
+        digit.addEventListener('input', function() {
+            if (this.value.length === 1) {
+                this.classList.remove('error');
+                
+                if (index < digits.length - 1) {
+                    digits[index + 1].focus();
+                } else {
+                    digits[index].blur();
+                }
+            }
+            
+            updateHiddenOtp();
+        });
+
+        digit.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !this.value && index > 0) {
+                digits[index - 1].focus();
+            }
+            
+            if (e.key === 'ArrowLeft' && index > 0) {
+                digits[index - 1].focus();
+            }
+            
+            if (e.key === 'ArrowRight' && index < digits.length - 1) {
+                digits[index + 1].focus();
+            }
+        });
+
+        digit.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const paste = (e.clipboardData || window.clipboardData).getData('text');
+            const numbers = paste.replace(/\D/g, '').slice(0, 6);
+            
+            if (numbers) {
+                for (let i = 0; i < numbers.length; i++) {
+                    if (i < digits.length) {
+                        digits[i].value = numbers[i];
+                    }
+                }
+                
+                if (numbers.length === 6) {
+                    digits[5].focus();
+                } else {
+                    digits[numbers.length].focus();
+                }
+                
+                updateHiddenOtp();
+            }
+        });
+    });
+
+    function updateHiddenOtp() {
+        const otp = Array.from(digits).map(d => d.value).join('');
+        otpHidden.value = otp;
+    }
+
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            const otp = Array.from(digits).map(d => d.value).join('');
+            
+            if (otp.length < 6) {
+                e.preventDefault();
+                digits.forEach(d => d.classList.add('error'));
+                
+                const alert = document.createElement('div');
+                alert.className = 'otp-alert otp-alert-error';
+                alert.innerHTML = `
+                    <div class="otp-alert-icon">!</div>
+                    <div class="otp-alert-message">Please enter complete 6-digit OTP</div>
+                    <div class="otp-alert-close" onclick="this.parentElement.remove()">✕</div>
+                `;
+                form.insertBefore(alert, form.firstChild);
+                
+                setTimeout(() => {
+                    digits.forEach(d => d.classList.remove('error'));
+                }, 2000);
+                
+                return;
+            }
+
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnIcon.style.display = 'none';
+            btnLoader.style.display = 'inline-block';
+            btnLoader.textContent = '⏳ Verifying...';
+        });
+    }
+
+    if (resendBtn) {
+        resendBtn.addEventListener('click', function() {
+            this.disabled = true;
+            this.innerHTML = '⏳ Sending...';
+            
+            setTimeout(() => {
+                timeLeft = 300;
+                timerDisplay.style.color = '';
+                digits.forEach(d => {
+                    d.disabled = false;
+                    d.classList.remove('error');
+                });
+                
+                this.disabled = false;
+                this.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 4v6h6" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3.51 14a9 9 0 1 0 2.13-9.36L1 10" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Resend OTP
+                `;
+                
+                const alert = document.createElement('div');
+                alert.className = 'otp-alert otp-alert-success';
+                alert.innerHTML = `
+                    <div class="otp-alert-icon">✓</div>
+                    <div class="otp-alert-message">New OTP has been sent to your email</div>
+                    <div class="otp-alert-close" onclick="this.parentElement.remove()">✕</div>
+                `;
+                form.insertBefore(alert, form.firstChild);
+                
+                setTimeout(() => {
+                    if (alert.parentNode) alert.remove();
+                }, 5000);
+            }, 1000);
+        });
+    }
+
+    const elements = [
+        document.querySelector('.otp-icon-wrapper'),
+        document.querySelector('.otp-header h2'),
+        document.querySelector('.otp-header p'),
+        document.querySelector('.otp-timer'),
+        document.querySelector('.otp-field'),
+        document.querySelector('.otp-btn'),
+        document.querySelector('.otp-resend'),
+        document.querySelector('.otp-back-link')
+    ];
+
+    elements.forEach((el, index) => {
+        if (el) {
+            el.style.animation = `otpSlideUp 0.5s ease-out ${index * 0.15 + 0.2}s both`;
+        }
+    });
+
+    const alerts = document.querySelectorAll('.otp-alert');
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            if (alert) alert.remove();
+        }, 5000);
+    });
+});
+</script>
 {% endblock %}

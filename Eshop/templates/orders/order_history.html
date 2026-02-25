@@ -1,14 +1,420 @@
+<style>
+.order-history {
+    max-width: 1200px;
+    margin: 20px auto !important;
+    padding: 40px 24px;
+    min-height: 84.4vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #f5f7fb 0%, #eef2f6 100%);
+    border-radius: 10px;
+}
+
+.order-history__header {
+    margin-bottom: 32px;
+    position: relative;
+}
+
+.order-history__header::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    border-radius: 2px;
+}
+
+.order-history__title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    letter-spacing: -0.5px;
+    display: inline-block;
+}
+
+.order-history__filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 8px 8px 8px 24px;
+    border-radius: 60px;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.order-filter {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 22px;
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    color: #1e293b;
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.filter-btn.active {
+    background: #3b82f6;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 8px 20px -8px #3b82f6;
+}
+
+.order-search {
+    position: relative;
+    width: 280px;
+}
+
+.order-search input {
+    width: 100%;
+    padding: 12px 20px 12px 48px;
+    border-radius: 40px;
+    border: 1px solid #e2e8f0;
+    font-size: 14px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.order-search input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 10px 25px -10px #3b82f6;
+    transform: translateY(-2px);
+}
+
+.order-search svg {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: #94a3b8;
+    transition: color 0.3s ease;
+}
+
+.order-search input:focus + svg {
+    color: #3b82f6;
+}
+
+.order-history__table-wrapper {
+    background: white;
+    border-radius: 28px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.order-history__table-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px -15px rgba(59, 130, 246, 0.2);
+}
+
+.order-history__table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+.order-history__table thead {
+    background: #f8fafd;
+}
+
+.order-history__table th {
+    padding: 20px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    text-align: left;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.order-history__table td {
+    padding: 18px 24px;
+    font-size: 14px;
+    color: #1e293b;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.order-history__table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.order-history__table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.order-history__table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.order-id {
+    font-weight: 700;
+    color: #3b82f6;
+    background: #eef2ff;
+    padding: 6px 14px;
+    border-radius: 40px;
+    font-size: 13px;
+    display: inline-block;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.order-date {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #475569;
+}
+
+.order-date svg {
+    width: 18px;
+    height: 18px;
+    color: #94a3b8;
+}
+
+.order-status {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 40px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
+}
+
+.order-status--pending {
+    background: #fffbeb;
+    color: #b45309;
+    border: 1px solid #fcd34d;
+}
+
+.order-status--completed {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #6ee7b7;
+}
+
+.order-status--cancelled {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+}
+
+.order-amount {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 15px;
+}
+
+.order-amount::before {
+    content: '₹';
+    margin-right: 2px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.order-history__actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.order-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 40px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.order-btn svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.order-btn--primary {
+    background: #3b82f6;
+    color: white;
+    box-shadow: 0 8px 20px -8px #3b82f6;
+}
+
+.order-btn--primary:hover {
+    background: #2563eb;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px -8px #3b82f6;
+}
+
+.order-btn--primary:hover svg {
+    transform: translateX(4px);
+}
+
+.order-btn--secondary {
+    background: white;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+
+.order-btn--secondary:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.1);
+}
+
+.order-btn--secondary:hover svg {
+    transform: scale(1.1);
+}
+
+.order-history__empty {
+    text-align: center;
+    padding: 70px 40px;
+    background: white;
+    border-radius: 32px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+}
+
+.order-history__empty-icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 25px;
+    background: linear-gradient(135deg, #f0f4fa, #e6edf5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.order-history__empty-icon svg {
+    width: 50px;
+    height: 50px;
+    color: #64748b;
+}
+
+.order-history__empty p {
+    color: #475569;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .order-history__filters {
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 30px;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .order-filter {
+        justify-content: center;
+    }
+
+    .order-search {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .order-history {
+        padding: 30px 16px;
+    }
+
+    .order-history__title {
+        font-size: 30px;
+    }
+
+    .order-history__table th,
+    .order-history__table td {
+        padding: 15px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 576px) {
+    .order-filter {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 8px;
+    }
+
+    .filter-btn {
+        padding: 8px 18px;
+        font-size: 13px;
+    }
+
+    .order-history__actions {
+        flex-direction: column;
+    }
+
+    .order-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .order-history__header::after {
+        width: 60px;
+    }
+}
+</style>
+
 {% extends 'base/base.html' %}
 {% load static %}
 
 {% block title %}
-Order History
+Order History - Solevyn
 {% endblock %}
 
 {% block content %}
 <div class="order-history">
-    <h1 class="order-history__title">Order History</h1>
+    <div class="order-history__header">
+        <h1 class="order-history__title">Order History</h1>
+    </div>
+
     {% if orders %}
+    <div class="order-history__filters">
+        <div class="order-filter">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Pending</button>
+            <button class="filter-btn">Completed</button>
+            <button class="filter-btn">Cancelled</button>
+        </div>
+        <div class="order-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="M21 21l-4.35-4.35"/>
+            </svg>
+            <input type="text" placeholder="Search by order ID or date..." id="searchInput">
+        </div>
+    </div>
+
     <div class="order-history__table-wrapper">
         <table class="order-history__table">
             <thead>
@@ -23,23 +429,39 @@ Order History
             <tbody>
                 {% for order in orders %}
                 <tr>
-                    <td>#{{ order.id }}</td>
-                    <td>{{ order.order_date|date:"d M Y, H:i" }}</td>
+                    <td><span class="order-id">#{{ order.id }}</span></td>
+                    <td>
+                        <div class="order-date">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                            {{ order.order_date|date:"d M Y, H:i" }}
+                        </div>
+                    </td>
                     <td>
                         <span class="order-status order-status--{{ order.status|lower }}">
                             {{ order.status }}
                         </span>
                     </td>
-                    <td>₹{{ order.total_amount }}</td>
+                    <td><span class="order-amount">{{ order.total_amount }}</span></td>
                     <td class="order-history__actions">
                         {% if order.status == 'PENDING' %}
-                        <a href="{% url 'payment:create_razorpay_order' order.id %}"
-                            class="order-btn order-btn--primary">
-                            Pay Now
+                        <a href="{% url 'payment:create_razorpay_order' order.id %}" class="order-btn order-btn--primary">
+                            <span>Pay Now</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
                         </a>
                         {% endif %}
                         <a href="{% url 'order_detail' order.id %}" class="order-btn order-btn--secondary">
-                            View Details
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M22 12c-2.667 4.667-6 7-10 7s-7.333-2.333-10-7c2.667-4.667 6-7 10-7s7.333 2.333 10 7z"/>
+                            </svg>
+                            <span>View Details</span>
                         </a>
                     </td>
                 </tr>
@@ -47,14 +469,93 @@ Order History
             </tbody>
         </table>
     </div>
+
     {% else %}
     <div class="order-history__empty">
-        <p>No orders found.</p>
+        <div class="order-history__empty-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+        </div>
+        <p>No orders found. Start shopping to see your order history here.</p>
         <a href="{% url 'homepage' %}" class="order-btn order-btn--primary">
-            Start Shopping
+            <span>Start Shopping</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
         </a>
     </div>
     {% endif %}
-
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const searchInput = document.getElementById('searchInput');
+    const rows = document.querySelectorAll('.order-history__table tbody tr');
+
+    // Filter functionality
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filter = this.textContent.toLowerCase();
+            
+            rows.forEach(row => {
+                const status = row.querySelector('.order-status')?.textContent.toLowerCase() || '';
+                
+                if (filter === 'all' || status.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Search functionality
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            rows.forEach(row => {
+                const orderId = row.cells[0]?.textContent.toLowerCase() || '';
+                const date = row.cells[1]?.textContent.toLowerCase() || '';
+                
+                if (orderId.includes(searchTerm) || date.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    // Click on row to view details (unless clicking on a button)
+    rows.forEach(row => {
+        row.addEventListener('click', function(e) {
+            if (!e.target.closest('a')) {
+                const detailLink = this.querySelector('a[href*="order_detail"]');
+                if (detailLink) {
+                    window.location.href = detailLink.href;
+                }
+            }
+        });
+    });
+
+    // Gentle pulse animation on empty state icon
+    const emptyIcon = document.querySelector('.order-history__empty-icon');
+    if (emptyIcon) {
+        setInterval(() => {
+            emptyIcon.style.transform = 'scale(1.03)';
+            emptyIcon.style.transition = 'transform 0.3s ease';
+            setTimeout(() => {
+                emptyIcon.style.transform = 'scale(1)';
+            }, 300);
+        }, 3000);
+    }
+});
+</script>
 {% endblock %}

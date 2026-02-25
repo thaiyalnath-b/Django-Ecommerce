@@ -1,24 +1,832 @@
+<style>
+:root {
+    --fp-deep: #0f172a;
+    --fp-slate: #1e293b;
+    --fp-charcoal: #334155;
+    --fp-stone: #475569;
+    --fp-mist: #cbd5e1;
+    --fp-fog: #e2e8f0;
+    --fp-cloud: #f1f5f9;
+    --fp-emerald: #10b981;
+    --fp-emerald-light: #34d399;
+    --fp-emerald-glow: #6ee7b7;
+    --fp-white: #ffffff;
+    --fp-offwhite: #f8fafc;
+    --fp-gradient-emerald: linear-gradient(135deg, #10b981 0%, #34d399 50%, #10b981 100%);
+    --fp-gradient-deep: linear-gradient(165deg, #0f172a 0%, #1e293b 100%);
+    --fp-shadow-soft: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    --fp-shadow-strong: 0 30px 60px -10px rgba(0, 0, 0, 0.2);
+    --fp-shadow-emerald: 0 20px 40px -8px rgba(16, 185, 129, 0.25);
+    --fp-transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --fp-transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sendotp {
+    min-height: 84.4vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(145deg, var(--fp-cloud) 0%, var(--fp-offwhite) 100%);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.sendotp::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    top: -200px;
+    right: -200px;
+    animation: fpFloat 20s ease-in-out infinite;
+    z-index: 0;
+}
+
+.sendotp::after {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.03) 0%, transparent 70%);
+    border-radius: 50%;
+    bottom: -200px;
+    left: -200px;
+    animation: fpFloat 25s ease-in-out infinite reverse;
+    z-index: 0;
+}
+
+.fp-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--fp-emerald);
+    border-radius: 50%;
+    opacity: 0.2;
+    animation: fpParticleFloat 15s linear infinite;
+}
+
+.fp-particle:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    animation-delay: -3s;
+}
+
+.fp-particle:nth-child(2) {
+    top: 70%;
+    right: 15%;
+    width: 6px;
+    height: 6px;
+    animation-delay: -7s;
+}
+
+.fp-particle:nth-child(3) {
+    bottom: 30%;
+    left: 20%;
+    animation-delay: -5s;
+}
+
+.fp-particle:nth-child(4) {
+    top: 40%;
+    right: 25%;
+    width: 3px;
+    height: 3px;
+    animation-delay: -2s;
+}
+
+.fp-card {
+    width: 100%;
+    max-width: 460px;
+    background: var(--fp-white);
+    border-radius: 48px;
+    padding: 48px 40px;
+    box-shadow: var(--fp-shadow-soft);
+    position: relative;
+    z-index: 10;
+    animation: fpSlideUp 0.7s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+}
+
+.fp-corner {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--fp-emerald);
+    opacity: 0.1;
+    transition: var(--fp-transition-smooth);
+}
+
+.fp-corner-tl {
+    top: -40px;
+    left: -40px;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 48px 0 0 0;
+}
+
+.fp-corner-br {
+    bottom: -40px;
+    right: -40px;
+    border-left: none;
+    border-top: none;
+    border-radius: 0 0 48px 0;
+}
+
+.fp-card:hover .fp-corner {
+    opacity: 0.3;
+    width: 100px;
+    height: 100px;
+}
+
+.fp-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--fp-emerald), var(--fp-emerald-light), var(--fp-emerald), transparent);
+    background-size: 200% 100%;
+    animation: fpGradientShift 3s ease infinite;
+}
+
+.fp-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.fp-icon-wrapper {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 25px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.1));
+    border-radius: 40% 60% 60% 40% / 40% 50% 50% 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fpMorph 8s ease-in-out infinite;
+    border: 2px solid rgba(16, 185, 129, 0.2);
+}
+
+.fp-icon-wrapper svg {
+    width: 45px;
+    height: 45px;
+    color: var(--fp-emerald);
+    animation: fpPulse 3s ease-in-out infinite;
+}
+
+.fp-header h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    font-family: 'Space Grotesk', 'Manrope', sans-serif;
+    color: var(--fp-deep);
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.fp-header h2 span {
+    background: linear-gradient(135deg, var(--fp-emerald), var(--fp-emerald-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.fp-header p {
+    color: var(--fp-stone);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.fp-field {
+    margin-bottom: 30px;
+}
+
+.fp-field label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--fp-slate);
+    letter-spacing: 0.5px;
+    padding-left: 8px;
+    transition: var(--fp-transition-smooth);
+}
+
+.fp-input-wrapper {
+    position: relative;
+}
+
+.fp-input-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: var(--fp-stone);
+    opacity: 0.4;
+    transition: var(--fp-transition-smooth);
+    z-index: 2;
+}
+
+.form-control {
+    width: 100%;
+    padding: 16px 20px 16px 52px;
+    font-size: 1rem;
+    border: 2px solid var(--fp-fog);
+    border-radius: 40px;
+    background: var(--fp-offwhite);
+    transition: var(--fp-transition-smooth);
+    font-family: 'Manrope', sans-serif;
+    color: var(--fp-deep);
+}
+
+.form-control::placeholder {
+    color: var(--fp-mist);
+    font-weight: 300;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--fp-emerald);
+    background: var(--fp-white);
+    box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.3);
+    transform: translateY(-2px);
+}
+
+.form-control:focus + .fp-input-icon {
+    opacity: 1;
+    color: var(--fp-emerald);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.form-control:hover:not(:focus) {
+    border-color: var(--fp-mist);
+}
+
+.fp-field.fp-field-focused label {
+    color: var(--fp-emerald);
+    transform: translateX(5px);
+}
+
+.fp-info {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(52, 211, 153, 0.05));
+    border-radius: 30px;
+    padding: 20px;
+    margin: 25px 0 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid rgba(16, 185, 129, 0.15);
+    animation: fpSlideIn 0.5s ease-out;
+}
+
+.fp-info-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(16, 185, 129, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--fp-emerald);
+}
+
+.fp-info-text p {
+    color: var(--fp-charcoal);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.fp-info-text p strong {
+    color: var(--fp-emerald);
+    font-weight: 700;
+}
+
+.fp-alert {
+    border-radius: 30px;
+    padding: 16px 24px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fpSlideIn 0.4s ease-out;
+    border-left: 4px solid transparent;
+}
+
+.fp-alert-error {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(245, 158, 11, 0.05));
+    border-left-color: #ef4444;
+}
+
+.fp-alert-error .fp-alert-icon {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.fp-alert-success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(52, 211, 153, 0.05));
+    border-left-color: #10b981;
+}
+
+.fp-alert-success .fp-alert-icon {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+.fp-alert-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.fp-alert-message {
+    color: var(--fp-deep);
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+.fp-alert-close {
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.fp-alert-close:hover {
+    opacity: 1;
+}
+
+.fp-btn {
+    width: 100%;
+    padding: 18px 0;
+    border-radius: 50px;
+    border: none;
+    background: var(--fp-gradient-emerald);
+    color: var(--fp-white);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: var(--fp-transition-bounce);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+
+.fp-btn-text {
+    z-index: 2;
+    transition: var(--fp-transition-smooth);
+}
+
+.fp-btn-icon {
+    z-index: 2;
+    transition: var(--fp-transition-smooth);
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.fp-btn-loader {
+    z-index: 2;
+    font-size: 1.2rem;
+}
+
+.fp-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+    transform: translate(-50%, -50%);
+    transition: width 0.8s ease, height 0.8s ease;
+    z-index: 1;
+}
+
+.fp-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--fp-shadow-emerald);
+}
+
+.fp-btn:hover .fp-btn-icon {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.fp-btn:hover::before {
+    width: 500px;
+    height: 500px;
+}
+
+.fp-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.fp-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.fp-back-link {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.fp-back-link a {
+    color: var(--fp-stone);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: var(--fp-transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fp-back-link a svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+
+.fp-back-link a:hover {
+    color: var(--fp-emerald);
+}
+
+.fp-back-link a:hover svg {
+    transform: translateX(-5px);
+}
+
+@keyframes fpSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fpSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fpFloat {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(50px, -50px) scale(1.1);
+    }
+    66% {
+        transform: translate(-30px, 30px) scale(0.9);
+    }
+}
+
+@keyframes fpParticleFloat {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.2;
+    }
+    50% {
+        transform: translate(30px, -30px) scale(1.5);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.2;
+    }
+}
+
+@keyframes fpMorph {
+    0%, 100% {
+        border-radius: 40% 60% 60% 40% / 40% 50% 50% 60%;
+    }
+    33% {
+        border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%;
+    }
+    66% {
+        border-radius: 30% 70% 50% 50% / 50% 50% 70% 30%;
+    }
+}
+
+@keyframes fpPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes fpGradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .fp-card {
+        padding: 40px 30px;
+        max-width: 440px;
+    }
+
+    .fp-header h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .sendotp {
+        padding: 30px 15px;
+    }
+
+    .fp-card {
+        padding: 35px 25px;
+    }
+
+    .fp-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .fp-header p {
+        font-size: 0.95rem;
+    }
+
+    .fp-info {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .fp-info-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .fp-info-text p {
+        font-size: 0.85rem;
+    }
+
+    .form-control {
+        padding: 14px 20px 14px 48px;
+        font-size: 0.95rem;
+    }
+
+    .fp-btn {
+        padding: 16px 0;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .fp-card {
+        padding: 30px 20px;
+    }
+
+    .fp-header h2 {
+        font-size: 1.6rem;
+    }
+
+    .fp-icon-wrapper {
+        width: 75px;
+        height: 75px;
+    }
+
+    .fp-icon-wrapper svg {
+        width: 35px;
+        height: 35px;
+    }
+}
+</style>
+
 {% extends 'base/base.html' %}
+{% load static %}
 
 {% block title %}
-Forgot Password
+Forgot Password - Solevyn
 {% endblock %}
 
 {% block content %}
 <section class="sendotp">
-    <div class="container pt-5">
-    <h2>Send OTP to Registered Email</h2>
+    <div class="fp-particle"></div>
+    <div class="fp-particle"></div>
+    <div class="fp-particle"></div>
+    <div class="fp-particle"></div>
 
-    <form method="POST">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="email" class=" form-label">
-                Email Address
-            </label>
-            <input type="email" class="form-control" name="email" id="email" required>
+    <div class="fp-card mx-auto">
+        <div class="fp-corner fp-corner-tl"></div>
+        <div class="fp-corner fp-corner-br"></div>
+
+        <div class="fp-header">
+            <div class="fp-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="4" width="20" height="16" rx="2" stroke-linecap="round"/>
+                    <path d="m22 7-10 7L2 7" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h2>Forgot <span>Password?</span></h2>
+            <p>We'll send a verification code to your email</p>
         </div>
-        <button type="submit" class="btn btn-success">Send OTP</button>
-    </form>
-</div>
+
+        <form method="POST" id="otpForm">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="fp-alert fp-alert-error">
+                <div class="fp-alert-icon">!</div>
+                <div class="fp-alert-message">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+                <div class="fp-alert-close" onclick="this.parentElement.remove()">✕</div>
+            </div>
+            {% endif %}
+
+            {% if messages %}
+                {% for message in messages %}
+                <div class="fp-alert fp-alert-{% if message.tags == 'success' %}success{% else %}error{% endif %}">
+                    <div class="fp-alert-icon">
+                        {% if message.tags == 'success' %}✓{% else %}!{% endif %}
+                    </div>
+                    <div class="fp-alert-message">{{ message }}</div>
+                    <div class="fp-alert-close" onclick="this.parentElement.remove()">✕</div>
+                </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="fp-field" id="email-field">
+                <label for="email">Email Address</label>
+                <div class="fp-input-wrapper">
+                    <span class="fp-input-icon">✉️</span>
+                    <input type="email" 
+                           class="form-control" 
+                           name="email" 
+                           id="email" 
+                           placeholder="Enter your registered email"
+                           value="{{ form.email.value|default:'' }}"
+                           required>
+                </div>
+                {% if form.email.errors %}
+                <div class="fp-alert fp-alert-error" style="margin-top: 10px; padding: 10px 15px;">
+                    <div class="fp-alert-icon">!</div>
+                    <div class="fp-alert-message">
+                        {{ form.email.errors }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="fp-info">
+                <div class="fp-info-icon">⏱️</div>
+                <div class="fp-info-text">
+                    <p>
+                        <strong>Quick & secure</strong> — OTP will expire in 5 minutes
+                    </p>
+                </div>
+            </div>
+
+            <button type="submit" class="fp-btn" id="submitBtn">
+                <span class="fp-btn-text">Send OTP</span>
+                <span class="fp-btn-icon">→</span>
+                <span class="fp-btn-loader" style="display: none;">⏳</span>
+            </button>
+
+            <div class="fp-back-link">
+                <a href="{% url 'signin' %}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Back to Login
+                </a>
+            </div>
+        </form>
+    </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('otpForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.fp-btn-text');
+    const btnIcon = submitBtn.querySelector('.fp-btn-icon');
+    const btnLoader = submitBtn.querySelector('.fp-btn-loader');
+    const emailInput = document.getElementById('email');
+    const emailField = document.getElementById('email-field');
+
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    if (emailInput) {
+        emailInput.addEventListener('input', function() {
+            if (this.value && validateEmail(this.value)) {
+                this.style.borderColor = '#10b981';
+                emailField.classList.add('fp-field-focused');
+            } else if (this.value) {
+                this.style.borderColor = '#ef4444';
+            } else {
+                this.style.borderColor = '';
+                emailField.classList.remove('fp-field-focused');
+            }
+        });
+
+        emailInput.addEventListener('focus', function() {
+            emailField.classList.add('fp-field-focused');
+        });
+
+        emailInput.addEventListener('blur', function() {
+            if (!this.value) {
+                emailField.classList.remove('fp-field-focused');
+            }
+        });
+    }
+
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            if (emailInput && !validateEmail(emailInput.value)) {
+                e.preventDefault();
+                
+                const existingAlert = document.querySelector('.fp-alert-error');
+                if (!existingAlert) {
+                    const alert = document.createElement('div');
+                    alert.className = 'fp-alert fp-alert-error';
+                    alert.innerHTML = `
+                        <div class="fp-alert-icon">!</div>
+                        <div class="fp-alert-message">Please enter a valid email address</div>
+                        <div class="fp-alert-close" onclick="this.parentElement.remove()">✕</div>
+                    `;
+                    form.insertBefore(alert, form.firstChild);
+                }
+                return;
+            }
+
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnIcon.style.display = 'none';
+            btnLoader.style.display = 'inline-block';
+            btnLoader.textContent = '⏳ Sending...';
+        });
+    }
+
+    const elements = [
+        document.querySelector('.fp-icon-wrapper'),
+        document.querySelector('.fp-header h2'),
+        document.querySelector('.fp-header p'),
+        document.querySelector('.fp-field'),
+        document.querySelector('.fp-info'),
+        document.querySelector('.fp-btn'),
+        document.querySelector('.fp-back-link')
+    ];
+
+    elements.forEach((el, index) => {
+        if (el) {
+            el.style.animation = `fpSlideUp 0.5s ease-out ${index * 0.15 + 0.2}s both`;
+        }
+    });
+
+    const alerts = document.querySelectorAll('.fp-alert');
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            if (alert) alert.remove();
+        }, 5000);
+    });
+});
+</script>
 {% endblock %}
